@@ -13,7 +13,7 @@ public class NodeParkingLot {
     public String summary;
     public String address;
     public String tel;
-    public String pey;
+    public String payDes;
     public String serviceTime;
     public int totalCar;
     public int totalMotor;
@@ -29,10 +29,10 @@ public class NodeParkingLot {
 
     public NodeParkingLot(){
         id = 1;
-        availableCar = 12;
-        availableMotor = 5;
-        lat = 1;
-        lon = 1;
-        pey = "計時：20元/時(8-18)，10元/時(18-8)。每日(20-8)最高收費50元，全程以半小時計費。月租：全日3,600元，日間2,400元(7-19)，夜間1,200元(限週一至週五19-8，及星期六、日與行政機關放假之紀念日、民俗日)";
+        availableCar = 0;
+        availableMotor = 120;
+        lat = 30;
+        lon = 30;
+        payDes = "計時：20元/時(8-18)，10元/時(18-8)。每日(20-8)最高收費50元，全程以半小時計費。月租：全日3,600元，日間2,400元(7-19)，夜間1,200元(限週一至週五19-8，及星期六、日與行政機關放假之紀念日、民俗日)";
     }
 }

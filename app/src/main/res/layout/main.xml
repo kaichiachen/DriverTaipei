@@ -17,7 +17,8 @@
         android:layout_marginRight="25dp"
         android:layout_marginBottom="100dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/navigationButton"
@@ -28,7 +29,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"/>
 
     <RelativeLayout
         android:id="@+id/detailBar"
@@ -38,8 +40,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="30dp">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="30dp"
+        android:visibility="invisible">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
@@ -47,7 +50,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="15dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:gravity="center"
             android:id="@+id/detailLinearLayout">
 

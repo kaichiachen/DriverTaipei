@@ -1,6 +1,8 @@
 package hackntu2015.edu.yzu.drivertaipei;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -48,10 +51,6 @@ public class MainActivity extends FragmentActivity {
 
     private RelativeLayout detailBar;
     private LinearLayout detailLinearLayout;
-    private ImageView categoryIcon;
-    private TextView categoryTitle;
-    private ImageView categoryMood;
-    private TextView categoryStatus;
     private Button categoryNavigation;
     private Button categoryPayMent;
 
@@ -73,9 +72,6 @@ public class MainActivity extends FragmentActivity {
         detailLinearLayout = (LinearLayout)findViewById(R.id.detailLinearLayout);
         categoryNavigation = (Button)findViewById(R.id.navigationButton);
         categoryPayMent = (Button)findViewById(R.id.parkingMoneyButton);
-
-        detailBar.setAlpha(0);
-        categoryNavigation.setAlpha(0);
 
         mMap.setMyLocationEnabled(true);
         LocationListener locationListener = new LocationListener(){
@@ -103,10 +99,26 @@ public class MainActivity extends FragmentActivity {
                 mSelectMarker = marker;
                 if (gasData.get(marker) != null) {
                     showCard(gasData.get(marker));
-                } else if(parkingLotData.get(marker) != null){
+                } else if (parkingLotData.get(marker) != null) {
                     showCard(parkingLotData.get(marker));
                 }
                 return true;
+            }
+        });
+
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+               if(detailBar.getVisibility() == View.VISIBLE)
+                    removeCard();
+            }
+        });
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if(detailBar.getVisibility() == View.VISIBLE)
+                    removeCard();
             }
         });
 
@@ -150,7 +162,6 @@ public class MainActivity extends FragmentActivity {
     private void setGasInfo(List<NodeGas> nodeGase){
         gasData = new HashMap<Marker,NodeGas>();
         for(int i = 0;i< nodeGase.size();i++) {
-
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(nodeGase.get(i).lat, nodeGase.get(i).lon))
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_petrolstation)));
@@ -158,9 +169,40 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    private void removeCard(){
+        Animation amAlpha = new AlphaAnimation(1.0f, 0.0f);
+        amAlpha.setDuration(500);
+        amAlpha.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                detailBar.setVisibility(View.INVISIBLE);
+                categoryNavigation.setVisibility(View.INVISIBLE);
+                categoryPayMent.setVisibility(View.INVISIBLE);
+            }
+        });
+        detailBar.startAnimation(amAlpha);
+        categoryNavigation.startAnimation(amAlpha);
+        if(categoryPayMent.getVisibility() == View.VISIBLE)
+            categoryPayMent.startAnimation(amAlpha);
+    }
+
     private void showCard(NodeGas nodeGas){
         detailLinearLayout.removeAllViews();
         LinearLayout.LayoutParams layout;
+
+        ImageView categoryIcon;
+        TextView categoryTitle;
+        ImageView categoryMood;
+        TextView categoryStatus;
+
         categoryIcon = new ImageView(ctx);
         layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.14f);
         categoryIcon.setLayoutParams(layout);
@@ -204,6 +246,9 @@ public class MainActivity extends FragmentActivity {
         amAlpha.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                detailBar.setVisibility(View.VISIBLE);
+                categoryNavigation.setVisibility(View.VISIBLE);
+                categoryPayMent.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -212,8 +257,6 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                detailBar.setAlpha(1);
-                categoryNavigation.setAlpha(1);
             }
         });
         detailBar.startAnimation(amAlpha);
@@ -226,13 +269,116 @@ public class MainActivity extends FragmentActivity {
 
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(nodeParkingLots.get(i).lat, nodeParkingLots.get(i).lon))
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_petrolstation)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_parkinglot)));
             parkingLotData.put(marker,nodeParkingLots.get(i));
         }
     }
 
-    private void showCard(NodeParkingLot nodeParkingLot){
+    private void showCard(final NodeParkingLot nodeParkingLot){
+        detailLinearLayout.removeAllViews();
+        LinearLayout.LayoutParams layout;
 
+        ImageView categoryCarIcon;
+        TextView categoryCarCount;
+        ImageView categoryMotorIcon;
+        TextView categoryMotrorCount;
+        ImageView categoryMood;
+        TextView categoryStatus;
+
+        categoryCarIcon = new ImageView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.14f);
+        categoryCarIcon.setImageResource(R.mipmap.parkingdark);
+        categoryCarIcon.setLayoutParams(layout);
+        detailLinearLayout.addView(categoryCarIcon);
+
+        categoryCarCount = new TextView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.14f);
+        if(nodeParkingLot.availableCar < 10)
+            layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.15f);
+        categoryCarCount.setLayoutParams(layout);
+        categoryCarCount.setText("" + nodeParkingLot.availableCar);
+        categoryCarCount.setTextColor(Color.BLACK);
+        categoryCarCount.setGravity(Gravity.CENTER);
+        detailLinearLayout.addView(categoryCarCount);
+
+        categoryMotorIcon = new ImageView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.14f);
+        categoryMotorIcon.setLayoutParams(layout);
+        categoryMotorIcon.setImageResource(R.mipmap.parking_bike_dark);
+        detailLinearLayout.addView(categoryMotorIcon);
+
+        categoryMotrorCount = new TextView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.14f);
+        if(nodeParkingLot.availableMotor < 10)
+            layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.15f);
+        categoryMotrorCount.setLayoutParams(layout);
+        categoryMotrorCount.setText("" + nodeParkingLot.availableMotor);
+        categoryMotrorCount.setTextColor(Color.BLACK);
+        categoryMotrorCount.setGravity(Gravity.CENTER);
+        detailLinearLayout.addView(categoryMotrorCount);
+
+        categoryMood = new ImageView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.14f);
+        categoryMood.setLayoutParams(layout);
+        detailLinearLayout.addView(categoryMood);
+
+        categoryStatus = new TextView(ctx);
+        categoryStatus.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
+        categoryStatus.setTextColor(Color.RED);
+        categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        categoryStatus.setGravity(Gravity.LEFT | Gravity.CENTER);
+        detailLinearLayout.addView(categoryStatus);
+
+        if (nodeParkingLot.availableCar > 0 ) {
+            categoryMood.setImageResource(R.mipmap.emoticon_happy);
+            categoryStatus.setText("有車位");
+        } else if(nodeParkingLot.availableMotor > 0){
+            categoryMood.setImageResource(R.mipmap.emoticon_happy);
+            categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            categoryStatus.setText("只有\n機車位");
+        } else{
+            categoryMood.setImageResource(R.mipmap.emoticon_sad);
+            categoryStatus.setText("無車位");
+        }
+
+
+        Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
+        amAlpha.setDuration(500);
+        amAlpha.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                detailBar.setVisibility(View.VISIBLE);
+                categoryNavigation.setVisibility(View.VISIBLE);
+                categoryPayMent.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+        });
+        detailBar.startAnimation(amAlpha);
+        categoryNavigation.startAnimation(amAlpha);
+        categoryPayMent.startAnimation(amAlpha);
+        categoryPayMent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder payDialog = new AlertDialog.Builder(ctx);
+                payDialog.setMessage(nodeParkingLot.payDes)
+                        .setNegativeButton("關閉", null);
+                final AlertDialog dialog = payDialog.create();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.BLUE);
+                    }
+                });
+                payDialog.show();
+            }
+        });
     }
 
     private void setUpMap(Location location) {
