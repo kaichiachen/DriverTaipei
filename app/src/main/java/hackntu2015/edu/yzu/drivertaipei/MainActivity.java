@@ -6,25 +6,58 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.HashMap;
+import java.util.List;
+
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeCarFlow;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeConstruct;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeGas;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeParkingLot;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeTraffic;
+import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
+import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
+import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
 
 public class MainActivity extends FragmentActivity {
 
     private GoogleMap mMap;
-    LocationManager locationManager;
+    private RelativeLayout detailBar;
+    private ImageView categoryIcon;
+    private TextView categoryTitle;
+    private ImageView categoryMood;
+    private TextView categoryStatus;
+    private Button categoryNavigation;
+    private Context ctx;
+    private LocationManager locationManager;
+    private HashMap<Marker, NodeGas> gasData;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        ctx = this;
         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                 .getMap();
+        detailBar = (RelativeLayout)findViewById(R.id.detailBar);
+        categoryTitle = (TextView)findViewById(R.id.title);
+        categoryMood = (ImageView)findViewById(R.id.emotion);
+        categoryStatus = (TextView)findViewById(R.id.status);
+
         mMap.setMyLocationEnabled(true);
         LocationListener locationListener = new LocationListener(){
             @Override
@@ -45,6 +78,30 @@ public class MainActivity extends FragmentActivity {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+        updateData();
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if(gasData.get(marker)!=null) {
+                    NodeGas gas = gasData.get(marker);
+                    categoryTitle.setText(gas.name);
+                    if (gas.hasOil) {
+                        categoryMood.setImageResource(R.mipmap.emoticon_happy);
+                        if(gas.hasSelf) {
+                            categoryStatus.setText("自助式");
+                        } else{
+                            categoryStatus.setText("非自助式");
+                        }
+                    } else {
+                        categoryStatus.setText("非營業中");
+                        categoryMood.setImageResource(R.mipmap.emoticon_sad);
+                    }
+                    showDetailBar();
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -53,32 +110,51 @@ public class MainActivity extends FragmentActivity {
         //setUpMapIfNeeded();
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
+    private void updateData(){
+        DataManager.getInstance().setListener(new DataListener() {
+            @Override
+            public void onDataUpdate(List<NodeCarFlow> carFlowList, List<NodeParkingLot> parkingLotList, List<NodeTraffic> trafficList, List<NodeConstruct> constructsList, List<NodeGas> nodeGas) {
+                setGasInfo(nodeGas);
+            }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
+            @Override
+            public void onDataConnectFailed(ErrorCode err) {
 
-    private void setUpMap() {
+            }
+        });
+        DataManager.getInstance().updateData();
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    }
+
+    private void setGasInfo(List<NodeGas> nodeGase){
+        gasData = new HashMap<Marker,NodeGas>();
+        for(int i = 0;i< nodeGase.size();i++) {
+
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(nodeGase.get(i).lat, nodeGase.get(i).lon))
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_petrolstation)));
+            gasData.put(marker,nodeGase.get(i));
+        }
+    }
+
+    private void showDetailBar(){
+        Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
+        amAlpha.setDuration(500);
+        amAlpha.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                detailBar.setAlpha(1);
+            }
+        });
+        detailBar.startAnimation(amAlpha);
     }
 
     private void setUpMap(Location location) {
