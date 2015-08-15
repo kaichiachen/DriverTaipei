@@ -8,7 +8,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeCarFlow;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeConstruct;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeGas;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeParkingLot;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeTraffic;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataController;
+import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
+import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
+import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
 
 public class MainActivity extends FragmentActivity {
 
@@ -20,6 +30,18 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         setUpMapIfNeeded();
+        DataManager.getInstance().setListener(new DataListener() {
+            @Override
+            public void onDataUpdate(List<NodeCarFlow> carFlowList, List<NodeParkingLot> parkingLotList, List<NodeTraffic> trafficList, List<NodeConstruct> constructsList, List<NodeGas> nodeGas) {
+                setUpMapIfNeeded();
+            }
+
+            @Override
+            public void onDataConnectFailed(ErrorCode err) {
+
+            }
+        });
+        DataManager.getInstance().updateData();
     }
 
     @Override
