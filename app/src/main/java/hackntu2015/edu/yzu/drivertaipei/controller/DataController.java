@@ -52,7 +52,7 @@ public class DataController {
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
                 Log.e(TAG, "Data request fail: " + statusCode);
-                notifyFailure(ErrorCode.ERR_WRONGURL);
+                //notifyFailure(ErrorCode.ERR_WRONGURL);
             }
 
             @Override

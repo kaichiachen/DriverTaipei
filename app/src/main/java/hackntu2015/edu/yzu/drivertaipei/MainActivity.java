@@ -6,7 +6,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -14,13 +13,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import hackntu2015.edu.yzu.drivertaipei.controller.DataController;
-
 public class MainActivity extends FragmentActivity {
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private DataController mDataController;
-
+    private GoogleMap mMap;
     LocationManager locationManager;
 
 
@@ -28,17 +23,14 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        //setUpMapIfNeeded();
         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                 .getMap();
+        mMap.setMyLocationEnabled(true);
         LocationListener locationListener = new LocationListener(){
             @Override
             public void onLocationChanged(Location location){
                 //implementation
-                Log.e("XXX","XXX"+location);
                 setUpMap(location);
-
-
             }
 
             @Override
@@ -52,7 +44,7 @@ public class MainActivity extends FragmentActivity {
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        mMap.setMyLocationEnabled(true);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     @Override
