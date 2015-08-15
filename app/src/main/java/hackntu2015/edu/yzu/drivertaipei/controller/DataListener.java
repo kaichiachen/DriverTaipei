@@ -14,6 +14,6 @@ import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
  */
 public interface DataListener {
 
-    public void onDataUpdate(List<NodeCarFlow> carFlowList, List<NodeParkingLot> parkingLotList, List<NodeTraffic> trafficList, List<NodeConstruct> constructsList, List<NodeGas> nodeGas);
+    public void onDataUpdate(List<NodeCarFlow> carFlowList, List<NodeParkingLot> parkingLotList, List<NodeTraffic> trafficList, List<NodeConstruct> constructsList, List<NodeGas> gasList);
     public void onDataConnectFailed(ErrorCode err);
 }

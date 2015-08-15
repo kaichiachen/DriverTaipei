@@ -30,6 +30,7 @@ public class NodeGas {
         lat = 0;
         name = "台塑的油";
         serviceTime = "00:00 ~ 24:00";
-        hasOil = false;
+        hasOil = true;
+        hasSelf = true;
     }
 }

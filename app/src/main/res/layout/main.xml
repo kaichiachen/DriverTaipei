@@ -1,70 +1,57 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"  android:layout_height="fill_parent" android:layout_width="fill_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
     <fragment android:layout_width="match_parent"
     android:layout_height="match_parent" android:id="@+id/map" tools:context=".MainActivity"
     android:name="com.google.android.gms.maps.SupportMapFragment" >
 
     </fragment>
+
+    <Button
+        android:id="@+id/parkingMoneyButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@mipmap/parkingpayment"
+        android:gravity="right"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:id="@+id/navigationButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@mipmap/navigationbutton"
+        android:gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"/>
+
     <RelativeLayout
         android:id="@+id/detailBar"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:background="@color/wallet_highlighted_text_holo_dark"
+        android:layout_height="60dp"
+        android:background="@drawable/card_background"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="30dp"
-        android:alpha="0">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="30dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/linearLayout">
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="10"
-                android:src="@mipmap/gas_petrol_station_md"/>
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="7"
-                android:text="台灣中油"
-                android:layout_gravity="center"
-                android:textColor="#000000"
-                android:gravity="center"
-                android:textSize="20sp"/>
-            <ImageView
-                android:id="@+id/emotion"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="10"
-                android:src="@mipmap/emoticon_sad"/>
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="6"
-                android:text="營業中"
-                android:gravity="center|left"
-                android:layout_gravity="center"
-                android:textColor="#FF0000"
-                android:textSize="20sp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:id="@+id/detailLinearLayout">
+
         </LinearLayout>
-        <Button
-            android:id="@+id/navigationButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="#0000FF"
-            android:gravity="right"
-            android:layout_marginRight="10dp"
-            android:layout_alignTop="@+id/linearLayout"
-            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 
