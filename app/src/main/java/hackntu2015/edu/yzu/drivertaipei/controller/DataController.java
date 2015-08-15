@@ -1,4 +1,4 @@
-package hackntu2015.edu.yzu.drivertaipei;
+package hackntu2015.edu.yzu.drivertaipei.controller;
 
 import android.util.Log;
 
@@ -18,12 +18,16 @@ import hackntu2015.edu.yzu.drivertaipei.Node.NodeGas;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeParkingLot;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeTraffic;
 import hackntu2015.edu.yzu.drivertaipei.network.RequestClient;
+import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
 
 /**
  * Created by andy on 8/15/15.
  */
 public class DataController {
     private String TAG = "DataController";
+
+    private DataListener mListener = null;
+
     private List<NodeGas> nodeGas;
     private List<NodeParkingLot> nodeParkingLots;
     private List<NodeCarFlow> nodeCarFlows;
@@ -38,12 +42,17 @@ public class DataController {
         nodeConstructs = new ArrayList<NodeConstruct>();
     }
 
+    void setListener(DataListener l){
+        mListener = l;
+    }
+
     void updateData(){
         RequestClient.request(new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
                 Log.e(TAG, "Data request fail: " + statusCode);
+                notifyFailure(ErrorCode.ERR_WRONGURL);
             }
 
             @Override
@@ -52,7 +61,12 @@ public class DataController {
                 try {
                     setGasData(response.getJSONArray("aa"));
                     setParkingLotData(response.getJSONArray("aa"));
+                    setCarFlow(response.getJSONArray("aa"));
+                    setConstructData(response.getJSONArray("aa"));
+                    setTrafficsData(response.getJSONArray("aa"));
+                    mListener.onDataUpdate(getCarFlowData(),getParkingLotData(),getTrafficData(),getConstructData(),getGasData());
                 } catch (JSONException e) {
+                    notifyFailure(ErrorCode.ERR_JSON);
                     e.printStackTrace();
                 }
             }
@@ -116,5 +130,26 @@ public class DataController {
 
     public List<NodeGas> getGasData(){
         return nodeGas;
+    }
+    public List<NodeCarFlow> getCarFlowData(){
+        return nodeCarFlows;
+    }
+
+    public List<NodeTraffic> getTrafficData(){
+        return nodeTraffics;
+    }
+
+    public List<NodeConstruct> getConstructData(){
+        return nodeConstructs;
+    }
+
+    public List<NodeParkingLot> getParkingLotData(){
+        return nodeParkingLots;
+    }
+
+    public void notifyFailure(ErrorCode err){
+        if(mListener != null){
+            mListener.onDataConnectFailed(err);
+        }
     }
 }
