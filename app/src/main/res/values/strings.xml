@@ -3,4 +3,8 @@
     <string name="title_activity_main">Map</string>
     <string name="longitude">經度：</string>
     <string name="latitude">緯度：</string>
+
+    <string name="title_activity_splash">splashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
