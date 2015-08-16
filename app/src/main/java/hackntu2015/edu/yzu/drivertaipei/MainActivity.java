@@ -101,6 +101,8 @@ public class MainActivity extends FragmentActivity {
                     showCard(gasData.get(marker));
                 } else if (parkingLotData.get(marker) != null) {
                     showCard(parkingLotData.get(marker));
+                } else if (constructData.get(marker) != null){
+                    showCard(constructData.get(marker));
                 }
                 return true;
             }
@@ -148,6 +150,7 @@ public class MainActivity extends FragmentActivity {
             public void onDataUpdate(List<NodeCarFlow> carFlowList, List<NodeParkingLot> parkingLotList, List<NodeTraffic> trafficList, List<NodeConstruct> constructsList, List<NodeGas> gasList) {
                 setGasInfo(gasList);
                 setParkingInfo(parkingLotList);
+                setConstructInfo(constructsList);
             }
 
             @Override
@@ -157,16 +160,6 @@ public class MainActivity extends FragmentActivity {
         });
         DataManager.getInstance().updateData();
 
-    }
-
-    private void setGasInfo(List<NodeGas> nodeGase){
-        gasData = new HashMap<Marker,NodeGas>();
-        for(int i = 0;i< nodeGase.size();i++) {
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(nodeGase.get(i).lat, nodeGase.get(i).lon))
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_petrolstation)));
-            gasData.put(marker,nodeGase.get(i));
-        }
     }
 
     private void removeCard(){
@@ -189,9 +182,20 @@ public class MainActivity extends FragmentActivity {
             }
         });
         detailBar.startAnimation(amAlpha);
-        categoryNavigation.startAnimation(amAlpha);
+        if(categoryNavigation.getVisibility() == View.VISIBLE)
+            categoryNavigation.startAnimation(amAlpha);
         if(categoryPayMent.getVisibility() == View.VISIBLE)
             categoryPayMent.startAnimation(amAlpha);
+    }
+
+    private void setGasInfo(List<NodeGas> nodeGase){
+        gasData = new HashMap<Marker,NodeGas>();
+        for(int i = 0;i< nodeGase.size();i++) {
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(nodeGase.get(i).lat, nodeGase.get(i).lon))
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_petrolstation)));
+            gasData.put(marker,nodeGase.get(i));
+        }
     }
 
     private void showCard(NodeGas nodeGas){
@@ -236,9 +240,11 @@ public class MainActivity extends FragmentActivity {
             } else {
                 categoryStatus.setText("非自助式");
             }
+            categoryStatus.setTextColor(Color.parseColor("#e8a032"));
         } else {
             categoryStatus.setText("非營業中");
             categoryMood.setImageResource(R.mipmap.emoticon_sad);
+            categoryStatus.setTextColor(Color.RED);
         }
 
         Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
@@ -330,15 +336,17 @@ public class MainActivity extends FragmentActivity {
         detailLinearLayout.addView(categoryStatus);
 
         if (nodeParkingLot.availableCar > 0 ) {
-            categoryMood.setImageResource(R.mipmap.emoticon_happy);
+            categoryMood.setImageResource(R.mipmap.emoticon_happy_green);
             categoryStatus.setText("有車位");
+            categoryStatus.setTextColor(Color.parseColor("#22ac38"));
         } else if(nodeParkingLot.availableMotor > 0){
-            categoryMood.setImageResource(R.mipmap.emoticon_happy);
-            categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            categoryStatus.setText("只有\n機車位");
+            categoryMood.setImageResource(R.mipmap.emoticon_happy_green);
+            categoryStatus.setText("有車位");
+            categoryStatus.setTextColor(Color.parseColor("#22ac38"));
         } else{
             categoryMood.setImageResource(R.mipmap.emoticon_sad);
             categoryStatus.setText("無車位");
+            categoryStatus.setTextColor(Color.RED);
         }
 
 
@@ -381,6 +389,90 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
+    private void setConstructInfo(List<NodeConstruct> nodeConstruct){
+        constructData = new HashMap<Marker,NodeConstruct>();
+        for(int i = 0;i< nodeConstruct.size();i++) {
+            Marker marker = null;
+            if(nodeConstruct.get(i).isToday) {
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(nodeConstruct.get(i).lat, nodeConstruct.get(i).lon))
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
+            } else {
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(nodeConstruct.get(i).lat, nodeConstruct.get(i).lon))
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_constructionsite)));
+            }
+            constructData.put(marker,nodeConstruct.get(i));
+        }
+    }
+
+    private void showCard(final NodeConstruct nodeConstruct){
+        detailLinearLayout.removeAllViews();
+        LinearLayout.LayoutParams layout;
+
+        ImageView categoryIcon;
+        TextView categoryTitle;
+        ImageView categoryMood;
+        TextView categoryStatus;
+
+        categoryIcon = new ImageView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
+        categoryIcon.setLayoutParams(layout);
+        if(nodeConstruct.isToday){ categoryIcon.setImageResource(R.mipmap.warning); }
+        else{ categoryIcon.setImageResource(R.mipmap.constructionsite); }
+
+        detailLinearLayout.addView(categoryIcon);
+
+        categoryTitle = new TextView(ctx);
+        categoryTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.08f));
+        categoryTitle.setText(nodeConstruct.status);
+        categoryTitle.setTextColor(Color.BLACK);
+        categoryTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        categoryTitle.setGravity(Gravity.CENTER | Gravity.LEFT);
+        detailLinearLayout.addView(categoryTitle);
+
+        categoryMood = new ImageView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
+        categoryMood.setLayoutParams(layout);
+        detailLinearLayout.addView(categoryMood);
+
+        categoryStatus = new TextView(ctx);
+        categoryStatus.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
+        categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        categoryStatus.setGravity(Gravity.CENTER);
+        detailLinearLayout.addView(categoryStatus);
+
+        if (nodeConstruct.isToday) {
+            categoryMood.setImageResource(R.mipmap.emoticon_sad);
+            categoryStatus.setText("今日發生");
+            categoryStatus.setTextColor(Color.RED);
+        } else {
+            categoryStatus.setText(nodeConstruct.completeDate+"完成");
+            categoryMood.setImageResource(R.mipmap.emoticon_happy);
+            categoryStatus.setTextColor(Color.parseColor("#e8a032"));
+        }
+
+        Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
+        amAlpha.setDuration(500);
+        amAlpha.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                detailBar.setVisibility(View.VISIBLE);
+                categoryNavigation.setVisibility(View.INVISIBLE);
+                categoryPayMent.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+        });
+        detailBar.startAnimation(amAlpha);
+    }
+
     private void setUpMap(Location location) {
 
         double lat = location.getLatitude();
@@ -391,6 +483,4 @@ public class MainActivity extends FragmentActivity {
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.gas_petrol_station_md)));
 
     }
-
-
 }

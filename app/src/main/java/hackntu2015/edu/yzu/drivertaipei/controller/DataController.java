@@ -53,7 +53,7 @@ public class DataController {
                                   String responseString, Throwable throwable) {
                 Log.e(TAG, "Data request fail: " + statusCode);
                 //notifyFailure(ErrorCode.ERR_WRONGURL);
-                mListener.onDataUpdate(null,getParkingLotData(),null,null,getGasData());
+                mListener.onDataUpdate(null,getParkingLotData(),null,getConstructData(),getGasData());
             }
 
             @Override
@@ -142,6 +142,7 @@ public class DataController {
     }
 
     public List<NodeConstruct> getConstructData(){
+        nodeConstructs.add(new NodeConstruct());
         return nodeConstructs;
     }
 
