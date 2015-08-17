@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/action_bar"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton
+        android:id="@+id/btn_menu"
+        android:background="@mipmap/menu"
+        android:layout_width="30.0dip"
+        android:layout_height="30.0dip"
+        android:layout_marginLeft="30.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" />
+    <ImageButton
+        android:id="@+id/btn_filter"
+        android:background="@drawable/filter_outline"
+        android:layout_width="30.0dip"
+        android:layout_height="30.0dip"
+        android:layout_marginRight="30.0dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+</RelativeLayout>

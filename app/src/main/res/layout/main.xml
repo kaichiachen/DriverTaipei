@@ -1,62 +1,34 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent">
-    <fragment android:layout_width="match_parent"
-    android:layout_height="match_parent" android:id="@+id/map" tools:context=".MainActivity"
-    android:name="com.google.android.gms.maps.SupportMapFragment" >
-
-    </fragment>
-
-    <Button
-        android:id="@+id/parkingMoneyButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@mipmap/parkingpayment"
-        android:gravity="right"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:visibility="invisible"/>
-
-    <Button
-        android:id="@+id/navigationButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@mipmap/navigationbutton"
-        android:gravity="right"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:visibility="invisible"/>
-
-    <RelativeLayout
-        android:id="@+id/detailBar"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/card_background"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="30dp"
-        android:visibility="invisible">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:id="@+id/detailLinearLayout">
-
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <fragment android:name="com.google.android.gms.maps.SupportMapFragment" android:id="@+id/map" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <LinearLayout android:orientation="vertical" android:id="@+id/menu_layout" android:background="@drawable/filter_background" android:visibility="invisible" android:layout_width="150.0dip" android:layout_height="200.0dip" android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:alpha="0.9">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="5.0dip" android:layout_weight="1.0">
+            <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/petrolstation" android:layout_weight="3.0" />
+            <TextView android:textSize="15.0sp" android:textColor="#ff000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="加油站" android:layout_weight="2.0" />
+            <CheckBox android:id="@+id/gas_checkBox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:checked="true" android:button="@drawable/checkboxselector" android:text="" android:layout_weight="3.0" />
         </LinearLayout>
-
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="0.0dip" android:layout_weight="1.0">
+            <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/parkingdark" android:layout_weight="3.0" />
+            <TextView android:textSize="15.0sp" android:textColor="#ff000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="停車場" android:layout_weight="2.0" />
+            <CheckBox android:id="@+id/parkingLot_checkBox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:checked="true" android:button="@drawable/checkboxselector" android:text="" android:layout_weight="3.0" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="0.0dip" android:layout_weight="1.0">
+            <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/warning" android:layout_weight="3.0" />
+            <TextView android:textSize="15.0sp" android:textColor="#ff000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="施工" android:layout_weight="2.0" />
+            <CheckBox android:id="@+id/construct_checkBox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:checked="true" android:button="@drawable/checkboxselector" android:text="" android:layout_weight="3.0" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="0.0dip" android:layout_weight="1.0">
+            <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/road" android:layout_weight="3.0" />
+            <TextView android:textSize="15.0sp" android:textColor="#ff000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="路況" android:layout_weight="2.0" />
+            <CheckBox android:id="@+id/carFlow_checkBox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:checked="true" android:button="@drawable/checkboxselector" android:text="" android:layout_weight="3.0" />
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@mipmap/actionbarshadow" android:layout_alignParentTop="true" />
+    <RelativeLayout android:id="@+id/detailBar" android:background="@drawable/card_background" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="60.0dip" android:layout_marginLeft="15.0dip" android:layout_marginRight="30.0dip" android:layout_marginBottom="30.0dip" android:layout_alignParentBottom="true" android:layout_alignParentStart="true">
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@+id/detailLinearLayout" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="15.0dip" android:layout_marginBottom="10.0dip" />
     </RelativeLayout>
-
-
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentBottom="true" android:layout_marginStart="425.0dip" android:layout_alignParentStart="true" />
+    <Button android:gravity="right" android:id="@+id/navigationButton" android:background="@mipmap/navigationbutton" android:visibility="invisible" android:layout_width="80.0dip" android:layout_height="80.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="20.0dip" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
+    <Button android:gravity="right" android:id="@+id/parkingMoneyButton" android:background="@mipmap/parkingpayment" android:visibility="invisible" android:layout_width="50.0dip" android:layout_height="50.0dip" android:layout_marginRight="25.0dip" android:layout_marginBottom="100.0dip" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
 </RelativeLayout>

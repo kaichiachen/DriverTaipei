@@ -2,7 +2,6 @@ package hackntu2015.edu.yzu.drivertaipei;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -11,13 +10,19 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,6 +32,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,7 +50,7 @@ import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
 import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 
     private Context ctx;
     private LocationManager locationManager;
@@ -54,9 +61,16 @@ public class MainActivity extends FragmentActivity {
     private Button categoryNavigation;
     private Button categoryPayMent;
 
+    private LinearLayout filterLayout;
+    private CheckBox gasCheckBox;
+    private CheckBox parkingLotCheckBox;
+    private CheckBox constructCheckBox;
+    private CheckBox carFlowCheckBox;
+
     private HashMap<Marker, NodeGas> gasData;
     private HashMap<Marker, NodeParkingLot> parkingLotData;
     private HashMap<Marker, NodeConstruct> constructData;
+    private HashMap<GroundOverlay, NodeCarFlow> carFlowData;
 
     private Handler uiHandler = new Handler();
     private Marker mSelectMarker;
@@ -66,12 +80,21 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         ctx = this;
+
+        setActionBar();
+
         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                 .getMap();
         detailBar = (RelativeLayout)findViewById(R.id.detailBar);
         detailLinearLayout = (LinearLayout)findViewById(R.id.detailLinearLayout);
         categoryNavigation = (Button)findViewById(R.id.navigationButton);
         categoryPayMent = (Button)findViewById(R.id.parkingMoneyButton);
+
+        filterLayout = (LinearLayout)findViewById(R.id.menu_layout);
+        gasCheckBox = (CheckBox)findViewById(R.id.gas_checkBox);
+        parkingLotCheckBox = (CheckBox)findViewById(R.id.parkingLot_checkBox);
+        carFlowCheckBox = (CheckBox)findViewById(R.id.carFlow_checkBox);
+        constructCheckBox = (CheckBox)findViewById(R.id.construct_checkBox);
 
         mMap.setMyLocationEnabled(true);
         LocationListener locationListener = new LocationListener(){
@@ -101,7 +124,7 @@ public class MainActivity extends FragmentActivity {
                     showCard(gasData.get(marker));
                 } else if (parkingLotData.get(marker) != null) {
                     showCard(parkingLotData.get(marker));
-                } else if (constructData.get(marker) != null){
+                } else if (constructData.get(marker) != null) {
                     showCard(constructData.get(marker));
                 }
                 return true;
@@ -111,7 +134,7 @@ public class MainActivity extends FragmentActivity {
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
-               if(detailBar.getVisibility() == View.VISIBLE)
+                if (detailBar.getVisibility() == View.VISIBLE)
                     removeCard();
             }
         });
@@ -119,7 +142,7 @@ public class MainActivity extends FragmentActivity {
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if(detailBar.getVisibility() == View.VISIBLE)
+                if (detailBar.getVisibility() == View.VISIBLE)
                     removeCard();
             }
         });
@@ -136,12 +159,112 @@ public class MainActivity extends FragmentActivity {
                 startActivity(intent);
             }
         });
+
+        filterImplement();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //setUpMapIfNeeded();
+    }
+
+    private void setActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar. LayoutParams.MATCH_PARENT);
+
+        actionBar.setCustomView(mCustomView,layoutParams);
+        actionBar.setDisplayShowCustomEnabled(true);
+        Toolbar parent = (Toolbar) mCustomView.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+
+        ImageButton filter = (ImageButton)mCustomView.findViewById(R.id.btn_filter);
+        ImageButton menu = (ImageButton)mCustomView.findViewById(R.id.btn_menu);
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(filterLayout.getVisibility() == View.VISIBLE){
+                    filterLayout.setVisibility(View.INVISIBLE);
+                } else {
+                    filterLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    private void filterImplement(){
+        gasCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    for (Marker marker : gasData.keySet()) {
+                        marker.setVisible(true);
+                    }
+                } else {
+                    for (Marker marker : gasData.keySet()) {
+                        marker.setVisible(false);
+                    }
+                }
+            }
+        });
+
+        parkingLotCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    for (Marker marker : parkingLotData.keySet()) {
+                        marker.setVisible(true);
+                    }
+                } else {
+                    for (Marker marker : parkingLotData.keySet()) {
+                        marker.setVisible(false);
+                    }
+                }
+            }
+        });
+
+        constructCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    for (Marker marker : constructData.keySet()) {
+                        marker.setVisible(true);
+                    }
+                } else {
+                    for (Marker marker : constructData.keySet()) {
+                        marker.setVisible(false);
+                    }
+                }
+            }
+        });
+
+        carFlowCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    for (GroundOverlay canvas : carFlowData.keySet()) {
+                        canvas.setVisible(true);
+                    }
+                } else {
+                    for (GroundOverlay canvas : carFlowData.keySet()) {
+                        canvas.setVisible(false);
+                    }
+                }
+            }
+        });
     }
 
     private void updateData(){
@@ -151,6 +274,7 @@ public class MainActivity extends FragmentActivity {
                 setGasInfo(gasList);
                 setParkingInfo(parkingLotList);
                 setConstructInfo(constructsList);
+                setCarFlowInfo(carFlowList);
             }
 
             @Override
@@ -159,7 +283,6 @@ public class MainActivity extends FragmentActivity {
             }
         });
         DataManager.getInstance().updateData();
-
     }
 
     private void removeCard(){
@@ -375,16 +498,21 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder payDialog = new AlertDialog.Builder(ctx);
-                payDialog.setMessage(nodeParkingLot.payDes)
-                        .setNegativeButton("關閉", null);
-                final AlertDialog dialog = payDialog.create();
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                LayoutInflater inflater = getLayoutInflater();
+                View dialoglayout = inflater.inflate(R.layout.custom_dialog, null);
+                payDialog.setView(dialoglayout);
+                final AlertDialog dialog = payDialog.show();
+                dialog.getWindow().setLayout(1000,1200);
+                TextView content = (TextView)dialoglayout.findViewById(R.id.dialog_content);
+                content.setText(nodeParkingLot.payDes);
+                Button closebtn = (Button)dialoglayout.findViewById(R.id.dialog_close);
+                closebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onShow(DialogInterface arg0) {
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.BLUE);
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
-                payDialog.show();
             }
         });
     }
@@ -471,6 +599,27 @@ public class MainActivity extends FragmentActivity {
             }
         });
         detailBar.startAnimation(amAlpha);
+    }
+
+    private void setCarFlowInfo(List<NodeCarFlow> nodeCarFlows){
+        carFlowData = new HashMap<GroundOverlay,NodeCarFlow>();
+        for(int i = 0;i< nodeCarFlows.size();i++) {
+            GroundOverlay overlay = null;
+            if(nodeCarFlows.get(i).level == NodeCarFlow.carFlowLevel.LOW){
+                overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
+                        .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_red))
+                        .position(nodeCarFlows.get(i).centerLocation, nodeCarFlows.get(i).width, nodeCarFlows.get(i).height));
+            } else if(nodeCarFlows.get(i).level == NodeCarFlow.carFlowLevel.MEDIUM){
+                overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
+                        .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_red))
+                        .position(nodeCarFlows.get(i).centerLocation, nodeCarFlows.get(i).width, nodeCarFlows.get(i).height));
+            } else {
+                overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
+                        .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_green))
+                        .position(nodeCarFlows.get(i).centerLocation, nodeCarFlows.get(i).width, nodeCarFlows.get(i).height));
+            }
+            carFlowData.put(overlay,nodeCarFlows.get(i));
+        }
     }
 
     private void setUpMap(Location location) {
