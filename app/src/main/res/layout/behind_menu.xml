@@ -1,0 +1,28 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            style="@style/leftBehindMenuScroll" >
+
+    <LinearLayout style="@style/behindMenuScrollContent"
+                  android:paddingTop="150dp" >
+        <TextView
+            style="@style/behindMenuItemTitle"
+            android:text="開車吧，台北"
+            android:textColor="@android:color/black"/>
+        <TextView
+            style="@style/behindMenuItemLabel"
+            android:text="設定"
+            android:textColor="@android:color/black"/>
+        <TextView
+            style="@style/behindMenuItemLabel"
+            android:text="使用說明"
+            android:textColor="@android:color/black"/>
+        <TextView
+            style="@style/behindMenuItemLabel"
+            android:text="關於我們"
+            android:textColor="@android:color/black"/>
+        <TextView
+            style="@style/behindMenuItemLabel"
+            android:text="離開"
+            android:textColor="@android:color/black"/>
+
+    </LinearLayout>
+</ScrollView>

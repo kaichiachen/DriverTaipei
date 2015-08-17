@@ -11,9 +11,12 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -30,6 +33,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.navdrawer.SimpleSideDrawer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +47,7 @@ import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
 import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 
     private Context ctx;
     private LocationManager locationManager;
@@ -61,10 +65,19 @@ public class MainActivity extends FragmentActivity {
     private Handler uiHandler = new Handler();
     private Marker mSelectMarker;
 
+    private SimpleSideDrawer mSlidingMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        mSlidingMenu = new SimpleSideDrawer(this);
+        mSlidingMenu.setBehindContentView(R.layout.behind_menu);
+
         ctx = this;
         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                 .getMap();
@@ -482,5 +495,31 @@ public class MainActivity extends FragmentActivity {
                 .position(new LatLng(lat,lng))
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.gas_petrol_station_md)));
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                return true;
+            case android.R.id.home:
+                mSlidingMenu.toggleDrawer();
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
