@@ -46,35 +46,95 @@ public class DataController {
         mListener = l;
     }
 
-    void updateData(){
-        RequestClient.request(new JsonHttpResponseHandler() {
+    void downloadParkingLotData(){
+        RequestClient.requestParkingLot(new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
                 Log.e(TAG, "Data request fail: " + statusCode);
                 //notifyFailure(ErrorCode.ERR_WRONGURL);
-                mListener.onDataUpdate(getCarFlowData(),getParkingLotData(),null,getConstructData(),getGasData());
+                mListener.onParkingLotDataDownloadComplete();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.i(TAG, "Data request success: " + response.toString());
+                setParkingLotData(response);
+                mListener.onParkingLotDataDownloadComplete();
+            }
+        });
+    }
+
+    void downloadConstructData(){
+        RequestClient.requestConstruct(new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseString, Throwable throwable) {
+                Log.e(TAG, "Data request fail: " + statusCode);
+                //notifyFailure(ErrorCode.ERR_WRONGURL);
+                mListener.onConstructDataDownloadComplete();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.i(TAG, "Data request success: " + response.toString());
+                setConstructData(response);
+                mListener.onConstructDataDownloadComplete();
+            }
+        });
+    }
+
+    void downloadGasData(){
+        RequestClient.requestGas(new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseString, Throwable throwable) {
+                Log.e(TAG, "Data request fail: " + statusCode);
+                //notifyFailure(ErrorCode.ERR_WRONGURL);
+                mListener.onGasDataDownloadComplete();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.i(TAG, "Data request success: " + response.toString());
+                setGasData(response);
+                mListener.onGasDataDownloadComplete();
+            }
+        });
+    }
+
+    void downloadCarFlowData(){
+        RequestClient.requestCarFlow(new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseString, Throwable throwable) {
+                Log.e(TAG, "Data request fail: " + statusCode);
+                //notifyFailure(ErrorCode.ERR_WRONGURL);
+                mListener.onCarFlowDataDownloadComplete();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.i(TAG, "Data request success: " + response.toString());
                 try {
-                    setGasData(response.getJSONArray("aa"));
-                    setParkingLotData(response.getJSONArray("aa"));
                     setCarFlow(response.getJSONArray("aa"));
-                    setConstructData(response.getJSONArray("aa"));
-                    setTrafficsData(response.getJSONArray("aa"));
-                    mListener.onDataUpdate(getCarFlowData(),getParkingLotData(),getTrafficData(),getConstructData(),getGasData());
+                    mListener.onCarFlowDataDownloadComplete();
                 } catch (JSONException e) {
-                    notifyFailure(ErrorCode.ERR_JSON);
+                    notifyFailure(ErrorCode.ERR_JSON,DataType.carflow);
                     e.printStackTrace();
                 }
             }
         });
     }
 
+    void updateData(){
+        mListener.onGasDataUpdate(getGasData());
+        mListener.onParkingLotDataUpdate(getParkingLotData());
+        mListener.onConstructDataUpdate(getConstructData());
+    }
+
     private void setGasData(JSONArray ja){
+        nodeGas.clear();
         for(int i = 0;i<ja.length();i++){
             try {
                 NodeGas gas = new NodeGas(ja.getJSONObject(i));
@@ -86,6 +146,7 @@ public class DataController {
     }
 
     private void setParkingLotData(JSONArray ja){
+        nodeParkingLots.clear();
         for(int i = 0;i<ja.length();i++){
             try {
                 NodeParkingLot parkingLot = new NodeParkingLot(ja.getJSONObject(i));
@@ -97,6 +158,7 @@ public class DataController {
     }
 
     private void setTrafficsData(JSONArray ja){
+        nodeTraffics.clear();
         for(int i = 0;i<ja.length();i++){
             try {
                 NodeTraffic traffic = new NodeTraffic(ja.getJSONObject(i));
@@ -108,6 +170,7 @@ public class DataController {
     }
 
     private void setConstructData(JSONArray ja){
+        nodeConstructs.clear();
         for(int i = 0;i<ja.length();i++){
             try {
                 NodeConstruct construct = new NodeConstruct(ja.getJSONObject(i));
@@ -152,9 +215,13 @@ public class DataController {
         return nodeParkingLots;
     }
 
-    public void notifyFailure(ErrorCode err){
+    public void notifyFailure(ErrorCode err, DataType dataType){
         if(mListener != null){
-            mListener.onDataConnectFailed(err);
+            mListener.onDataDownloadFailed(err, dataType);
         }
+    }
+
+    public enum DataType{
+        gas,parkinglot,carflow,construct;
     }
 }

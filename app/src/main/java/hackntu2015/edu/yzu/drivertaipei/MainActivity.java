@@ -19,12 +19,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,6 +39,7 @@ import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.navdrawer.SimpleSideDrawer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +48,7 @@ import hackntu2015.edu.yzu.drivertaipei.Node.NodeCarFlow;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeConstruct;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeGas;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeParkingLot;
-import hackntu2015.edu.yzu.drivertaipei.Node.NodeTraffic;
+import hackntu2015.edu.yzu.drivertaipei.controller.DataController;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
 import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
@@ -79,6 +82,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
         ctx = this;
 
         setActionBar();
@@ -90,11 +94,18 @@ public class MainActivity extends ActionBarActivity {
         categoryNavigation = (Button)findViewById(R.id.navigationButton);
         categoryPayMent = (Button)findViewById(R.id.parkingMoneyButton);
 
-        filterLayout = (LinearLayout)findViewById(R.id.menu_layout);
+        filterLayout = (LinearLayout)findViewById(R.id.filter_layout);
         gasCheckBox = (CheckBox)findViewById(R.id.gas_checkBox);
         parkingLotCheckBox = (CheckBox)findViewById(R.id.parkingLot_checkBox);
         carFlowCheckBox = (CheckBox)findViewById(R.id.carFlow_checkBox);
         constructCheckBox = (CheckBox)findViewById(R.id.construct_checkBox);
+
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+
+            }
+        });
 
         mMap.setMyLocationEnabled(true);
         LocationListener locationListener = new LocationListener(){
@@ -144,6 +155,11 @@ public class MainActivity extends ActionBarActivity {
             public void onMapClick(LatLng latLng) {
                 if (detailBar.getVisibility() == View.VISIBLE)
                     removeCard();
+                if(filterLayout.getVisibility() == View.VISIBLE){
+                    filterLayout.setVisibility(View.INVISIBLE);
+                } else {
+                    filterLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -189,7 +205,7 @@ public class MainActivity extends ActionBarActivity {
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(filterLayout.getVisibility() == View.VISIBLE){
+                if (filterLayout.getVisibility() == View.VISIBLE) {
                     filterLayout.setVisibility(View.INVISIBLE);
                 } else {
                     filterLayout.setVisibility(View.VISIBLE);
@@ -197,12 +213,26 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        final SimpleSideDrawer mMenu = new SimpleSideDrawer(this);
+        mMenu.setLeftBehindContentView(R.layout.menu);
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMenu.toggleLeftDrawer();
+            }
+        });
+        ImageView menu_top = (ImageView)mMenu.findViewById(R.id.menu_top);
+        menu_top.setBackgroundResource(R.mipmap.menu_topimage_day);
+        ListView listView = (ListView)mMenu.findViewById(R.id.listView);
+        listView.setAdapter(new MenuAdapter(this));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             }
         });
+
     }
 
     private void filterImplement(){
@@ -269,17 +299,50 @@ public class MainActivity extends ActionBarActivity {
 
     private void updateData(){
         DataManager.getInstance().setListener(new DataListener() {
+
             @Override
-            public void onDataUpdate(List<NodeCarFlow> carFlowList, List<NodeParkingLot> parkingLotList, List<NodeTraffic> trafficList, List<NodeConstruct> constructsList, List<NodeGas> gasList) {
-                setGasInfo(gasList);
-                setParkingInfo(parkingLotList);
-                setConstructInfo(constructsList);
-                setCarFlowInfo(carFlowList);
+            public void onParkingLotDataDownloadComplete() {
+
             }
 
             @Override
-            public void onDataConnectFailed(ErrorCode err) {
+            public void onGasDataDownloadComplete() {
 
+            }
+
+            @Override
+            public void onConstructDataDownloadComplete() {
+
+            }
+
+            @Override
+            public void onCarFlowDataDownloadComplete() {
+
+            }
+
+            @Override
+            public void onDataDownloadFailed(ErrorCode err, DataController.DataType dataType) {
+
+            }
+
+            @Override
+            public void onGasDataUpdate(List<NodeGas> gasList) {
+               setGasInfo(gasList);
+            }
+
+            @Override
+            public void onParkingLotDataUpdate(List<NodeParkingLot> parkingLotList) {
+                setParkingInfo(parkingLotList);
+            }
+
+            @Override
+            public void onConstructDataUpdate(List<NodeConstruct> constructList) {
+                setConstructInfo(constructList);
+            }
+
+            @Override
+            public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList) {
+                setCarFlowInfo(carFlowList);
             }
         });
         DataManager.getInstance().updateData();

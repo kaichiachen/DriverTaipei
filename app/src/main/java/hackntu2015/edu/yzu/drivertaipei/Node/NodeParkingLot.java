@@ -1,12 +1,13 @@
 package hackntu2015.edu.yzu.drivertaipei.Node;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by andy on 8/15/15.
  */
 public class NodeParkingLot {
-    public int id;
+    public String id;
     public int parkingid;
     public String area;
     public String name;
@@ -25,10 +26,21 @@ public class NodeParkingLot {
     public double lat;
 
     public NodeParkingLot(JSONObject jo) {
+        try {
+            id = jo.getString("id");
+            name = jo.getString("name");
+            lat = jo.getDouble("lat");
+            lon = jo.getDouble("lng");
+            availableCar = jo.getInt("availableCar");
+            availableMotor = jo.getInt("availableMotor");
+            payDes = jo.getString("payDes");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public NodeParkingLot(){
-        id = 1;
+        id = "1";
         availableCar = 0;
         availableMotor = 120;
         lat = 30;
