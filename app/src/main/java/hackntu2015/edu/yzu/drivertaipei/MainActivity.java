@@ -255,8 +255,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void updateMarker(LatLng cameraPosition){
-        if(true){
-            if(gasIsCheck) {
+           if(gasIsCheck) {
                 for (Marker marker : gasData.keySet()) {
                     marker.remove();
                 }
