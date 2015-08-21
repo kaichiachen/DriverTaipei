@@ -1,5 +1,4 @@
-<resources>
-    <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
     <resources>
         <string name="app_name">DriverTaipei</string>
         <string name="title_activity_main">Map</string>
@@ -26,5 +25,4 @@
         <string name="ok">OK</string>
         <string name="data_error">Data error</string>
 
-    </resources>
 </resources>
