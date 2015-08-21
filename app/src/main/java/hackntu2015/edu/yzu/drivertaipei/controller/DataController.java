@@ -7,7 +7,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class DataController {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
-                Log.e(TAG, "Data request fail: " + statusCode);
+                Log.e(TAG, "ParkingLot Data request fail: " + statusCode);
                 //notifyFailure(ErrorCode.ERR_WRONGURL);
                 mListener.onParkingLotDataDownloadComplete();
             }
@@ -70,7 +69,7 @@ public class DataController {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
-                Log.e(TAG, "Data request fail: " + statusCode);
+                Log.e(TAG, "Construct Data request fail: " + statusCode);
                 //notifyFailure(ErrorCode.ERR_WRONGURL);
                 mListener.onConstructDataDownloadComplete();
             }
@@ -89,7 +88,7 @@ public class DataController {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
-                Log.e(TAG, "Data request fail: " + statusCode);
+                Log.e(TAG, "Gas Data request fail: " + statusCode);
                 //notifyFailure(ErrorCode.ERR_WRONGURL);
                 mListener.onGasDataDownloadComplete();
             }
@@ -108,21 +107,16 @@ public class DataController {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
-                Log.e(TAG, "Data request fail: " + statusCode);
+                Log.e(TAG, "CarFlow Data request fail: " + statusCode);
                 //notifyFailure(ErrorCode.ERR_WRONGURL);
                 mListener.onCarFlowDataDownloadComplete();
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.i(TAG, "Data request success: " + response.toString());
-                try {
-                    setCarFlow(response.getJSONArray("aa"));
-                    mListener.onCarFlowDataDownloadComplete();
-                } catch (JSONException e) {
-                    notifyFailure(ErrorCode.ERR_JSON,DataType.carflow);
-                    e.printStackTrace();
-                }
+                setCarFlow(response);
+                mListener.onCarFlowDataDownloadComplete();
             }
         });
     }
@@ -131,6 +125,7 @@ public class DataController {
         mListener.onGasDataUpdate(getGasData());
         mListener.onParkingLotDataUpdate(getParkingLotData());
         mListener.onConstructDataUpdate(getConstructData());
+        mListener.onCarFlowDataUpdate(getCarFlowData());
     }
 
     private void setGasData(JSONArray ja){

@@ -1,7 +1,5 @@
 package hackntu2015.edu.yzu.drivertaipei.Node;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,8 +35,6 @@ public class NodeConstruct {
                 today = format.parse(todayStr);
                 Date oldday = format.parse(startDate);
                 if((today.getTime()-oldday.getTime())<=0){
-                    Log.e("XXX",""+today.getTime());
-                    Log.e("XXX1",""+oldday.getTime());
                     isToday = true;
                 } else {
                     isToday = false;

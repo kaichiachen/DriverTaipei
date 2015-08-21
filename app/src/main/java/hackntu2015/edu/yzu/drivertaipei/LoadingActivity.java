@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -31,7 +33,10 @@ public class LoadingActivity extends Activity {
     boolean isConstructDownloaded = false;
     boolean isCarFLowDownloaded = false;
     boolean isGasDownloaded = false;
+    int loadingCount = 0;
     Context ctx;
+
+    private ProgressBar loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,8 @@ public class LoadingActivity extends Activity {
         setContentView(R.layout.loading);
         time = 0;
         ctx = this;
+        loadingBar = (ProgressBar)findViewById(R.id.loading_progress);
+        loadingBar.setVisibility(View.INVISIBLE);
         final Handler handler = new Handler();
 
         Runnable loading = new Runnable(){
@@ -47,13 +54,14 @@ public class LoadingActivity extends Activity {
             public void run() {
                 time++;
                 Log.e(TAG,"timer: "+time);
-                if (time > 2 && isGasDownloaded && isParkingLotDownloaded && isConstructDownloaded) {
+                if (time > 2 && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded) {
                     handler.removeCallbacks(this);
                     Intent i = new Intent(LoadingActivity.this, MainActivity.class);
                     ctx.startActivity(i);
                     finish();
                     return;
                 } else if(time > 30){
+                    handler.removeCallbacks(this);
                     AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
                     alert.setMessage("網路連線不良").setPositiveButton("確定", new DialogInterface.OnClickListener() {
                         @Override
@@ -66,6 +74,9 @@ public class LoadingActivity extends Activity {
                             finish();
                         }
                     }).show();
+                    return;
+                } else if(time>2){
+                    loadingBar.setVisibility(View.VISIBLE);
                 }
                 handler.postDelayed(this,1000);
             }
@@ -77,21 +88,25 @@ public class LoadingActivity extends Activity {
 
             @Override
             public void onParkingLotDataDownloadComplete() {
+                loadingCount++;
                 isParkingLotDownloaded = true;
             }
 
             @Override
             public void onGasDataDownloadComplete() {
+                loadingCount++;
                 isGasDownloaded = true;
             }
 
             @Override
             public void onConstructDataDownloadComplete() {
+                loadingCount++;
                 isConstructDownloaded = true;
             }
 
             @Override
             public void onCarFlowDataDownloadComplete() {
+                loadingCount++;
                 isCarFLowDownloaded = true;
             }
 
@@ -132,7 +147,7 @@ public class LoadingActivity extends Activity {
             }
         });
         DataManager.getInstance().downloadParkingLotData();
-        //DataManager.getInstance().downloadCarFlowData();
+        DataManager.getInstance().downloadCarFlowData();
         DataManager.getInstance().downloadGasData();
         DataManager.getInstance().downloadConstructData();
     }

@@ -2,6 +2,7 @@ package hackntu2015.edu.yzu.drivertaipei.Node;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -9,7 +10,7 @@ import org.json.JSONObject;
  */
 public class NodeCarFlow {
 
-    public int id;
+    public String id;
     public String name;
     public double avgSpeed;
     public LatLng centerLocation;
@@ -22,7 +23,23 @@ public class NodeCarFlow {
     }
 
     public NodeCarFlow(JSONObject jo){
+        try {
+            id = jo.getString("id");
+            name = jo.getString("name");
+            if(jo.getString("carLevel").equals("fast")){
+                level = carFlowLevel.FAST;
+            } else if(jo.getString("carLevel").equals("medium")){
+                level = carFlowLevel.MEDIUM;
+            } else if(jo.getString("carLevel").equals("low")){
+                level = carFlowLevel.LOW;
+            }
+            centerLocation = new LatLng(jo.getDouble("lat"),jo.getDouble("lng"));
+            height = (float) jo.getDouble("height");
+            width = (float) jo.getDouble("width");
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public NodeCarFlow(){

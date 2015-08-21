@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -78,6 +79,12 @@ public class MainActivity extends ActionBarActivity {
     private Handler uiHandler = new Handler();
     private Marker mSelectMarker;
 
+    private boolean insideScale = true;
+    private boolean gasIsCheck = true;
+    private boolean parkingLotIsCheck = true;
+    private boolean constructIsCheck = true;
+    private boolean carFlowIsCheck = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,11 +113,12 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-
         mMap.setMyLocationEnabled(true);
         LocationListener locationListener = new LocationListener(){
             @Override
             public void onLocationChanged(Location location){
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
+                locationManager.removeUpdates(this);
             }
 
             @Override
@@ -147,6 +155,12 @@ public class MainActivity extends ActionBarActivity {
             public void onCameraChange(CameraPosition cameraPosition) {
                 if (detailBar.getVisibility() == View.VISIBLE)
                     removeCard();
+                if (cameraPosition.zoom < 16.5) {
+                    insideScale = false;
+                } else {
+                    insideScale = true;
+                }
+               // updateMarker();
             }
         });
 
@@ -155,7 +169,7 @@ public class MainActivity extends ActionBarActivity {
             public void onMapClick(LatLng latLng) {
                 if (detailBar.getVisibility() == View.VISIBLE)
                     removeCard();
-                if(filterLayout.getVisibility() == View.VISIBLE){
+                if (filterLayout.getVisibility() == View.VISIBLE) {
                     filterLayout.setVisibility(View.INVISIBLE);
                 } else {
                     filterLayout.setVisibility(View.VISIBLE);
@@ -175,14 +189,12 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
         filterImplement();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //setUpMapIfNeeded();
     }
 
     private void setActionBar(){
@@ -235,11 +247,70 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    private void updateMarker(){
+        if(insideScale){
+            if(gasIsCheck) {
+                for (Marker marker : gasData.keySet()) {
+                    marker.setVisible(true);
+                }
+            } else {
+                for (Marker marker : gasData.keySet()) {
+                    marker.setVisible(false);
+                }
+            }
+            if(parkingLotIsCheck) {
+                for (Marker marker : parkingLotData.keySet()) {
+                    marker.setVisible(true);
+                }
+            } else {
+                for (Marker marker : parkingLotData.keySet()) {
+                    marker.setVisible(false);
+                }
+            }
+            if(constructIsCheck) {
+                for (Marker marker : constructData.keySet()) {
+                    marker.setVisible(true);
+                }
+            } else {
+                for (Marker marker : constructData.keySet()) {
+                    marker.setVisible(false);
+                }
+            }
+            if(carFlowIsCheck) {
+                for (GroundOverlay canvas : carFlowData.keySet()) {
+                    canvas.setVisible(true);
+                }
+            } else {
+                for (GroundOverlay canvas : carFlowData.keySet()) {
+                    canvas.setVisible(false);
+                }
+            }
+
+        } else {
+            invisibaleizeMarker();
+        }
+    }
+
+    private void invisibaleizeMarker(){
+        for (Marker marker : gasData.keySet()) {
+            marker.setVisible(false);
+        }
+        for (Marker marker : parkingLotData.keySet()) {
+            marker.setVisible(false);
+        }
+        for (Marker marker : constructData.keySet()) {
+            marker.setVisible(false);
+        }
+//        for (GroundOverlay canvas : carFlowData.keySet()) {
+//            canvas.setVisible(false);
+//        }
+    }
+
     private void filterImplement(){
         gasCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if(isChecked && insideScale) {
                     for (Marker marker : gasData.keySet()) {
                         marker.setVisible(true);
                     }
@@ -248,13 +319,14 @@ public class MainActivity extends ActionBarActivity {
                         marker.setVisible(false);
                     }
                 }
+                gasIsCheck = isChecked;
             }
         });
 
         parkingLotCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if(isChecked && insideScale) {
                     for (Marker marker : parkingLotData.keySet()) {
                         marker.setVisible(true);
                     }
@@ -263,13 +335,14 @@ public class MainActivity extends ActionBarActivity {
                         marker.setVisible(false);
                     }
                 }
+                parkingLotIsCheck = isChecked;
             }
         });
 
         constructCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if(isChecked && insideScale) {
                     for (Marker marker : constructData.keySet()) {
                         marker.setVisible(true);
                     }
@@ -278,13 +351,14 @@ public class MainActivity extends ActionBarActivity {
                         marker.setVisible(false);
                     }
                 }
+                constructIsCheck = isChecked;
             }
         });
 
         carFlowCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if(isChecked && insideScale) {
                     for (GroundOverlay canvas : carFlowData.keySet()) {
                         canvas.setVisible(true);
                     }
@@ -293,6 +367,7 @@ public class MainActivity extends ActionBarActivity {
                         canvas.setVisible(false);
                     }
                 }
+                carFlowIsCheck = isChecked;
             }
         });
     }
@@ -342,7 +417,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList) {
-                setCarFlowInfo(carFlowList);
+                //setCarFlowInfo(carFlowList);
             }
         });
         DataManager.getInstance().updateData();

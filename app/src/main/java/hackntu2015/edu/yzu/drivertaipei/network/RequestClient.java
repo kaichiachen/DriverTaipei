@@ -10,7 +10,7 @@ public class RequestClient {
     private static final String PARKINGLOT_URL = "http://drivertaipei.cloudapp.net/api/parking";
     private static final String CONSTRUCT_URL = "http://drivertaipei.cloudapp.net/api/construct";
     private static final String GAS_URL = "http://drivertaipei.cloudapp.net/api/gas";
-    private static final String CARFLOW_URL ="http://www.google.com";
+    private static final String CARFLOW_URL ="http://drivertaipei.cloudapp.net/api/vd";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void requestParkingLot(AsyncHttpResponseHandler responseHandler){
