@@ -40,9 +40,9 @@ public class MenuAdapter extends BaseAdapter {
         convertView = myInflater.inflate(R.layout.listview, null);
         ImageView icon = (ImageView)convertView.findViewById(R.id.menu_icon);
         TextView title = (TextView)convertView.findViewById(R.id.menu_text);
-
         icon.setImageResource(icon_res[position]);
         title.setText(menu_title[position]);
+
 
         return convertView;
     }
