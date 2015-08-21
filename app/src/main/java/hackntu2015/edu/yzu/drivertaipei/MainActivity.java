@@ -10,9 +10,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -57,11 +55,14 @@ import hackntu2015.edu.yzu.drivertaipei.utils.AutoResizeTextView;
 import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
 import hackntu2015.edu.yzu.drivertaipei.utils.Utils;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
 
     private Context ctx;
     private LocationManager locationManager;
     private GoogleMap mMap;
+
+    private ImageButton filter;
+    private ImageButton menu;
 
     private RelativeLayout detailBar;
     private LinearLayout detailLinearLayout;
@@ -96,10 +97,48 @@ public class MainActivity extends ActionBarActivity {
 
         ctx = this;
 
-        setActionBar();
-
         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                 .getMap();
+
+        menu = (ImageButton)findViewById(R.id.btn_menu);
+        filter = (ImageButton)findViewById(R.id.btn_filter);
+
+        final SimpleSideDrawer mMenu = new SimpleSideDrawer(this);
+        mMenu.setLeftBehindContentView(R.layout.menu);
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenu.toggleLeftDrawer();
+            }
+        });
+
+        ImageView menu_top = (ImageView)mMenu.findViewById(R.id.menu_top);
+        if(Utils.isNight()) {
+            menu_top.setBackgroundResource(R.mipmap.menu_topimage_night);
+        } else{
+            menu_top.setBackgroundResource(R.mipmap.menu_topimage_day);
+        }
+        ListView listView = (ListView)mMenu.findViewById(R.id.listView);
+        listView.setAdapter(new MenuAdapter(this));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (filterLayout.getVisibility() == View.VISIBLE) {
+                    filterLayout.setVisibility(View.INVISIBLE);
+                } else {
+                    filterLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         detailBar = (RelativeLayout)findViewById(R.id.detailBar);
         detailLinearLayout = (LinearLayout)findViewById(R.id.detailLinearLayout);
         categoryNavigation = (Button)findViewById(R.id.navigationButton);
@@ -204,56 +243,56 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setActionBar(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(this);
-        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar. LayoutParams.MATCH_PARENT);
-
-        actionBar.setCustomView(mCustomView,layoutParams);
-        actionBar.setDisplayShowCustomEnabled(true);
-        Toolbar parent = (Toolbar) mCustomView.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
-
-        ImageButton filter = (ImageButton)mCustomView.findViewById(R.id.btn_filter);
-        ImageButton menu = (ImageButton)mCustomView.findViewById(R.id.btn_menu);
-
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (filterLayout.getVisibility() == View.VISIBLE) {
-                    filterLayout.setVisibility(View.INVISIBLE);
-                } else {
-                    filterLayout.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        final SimpleSideDrawer mMenu = new SimpleSideDrawer(this);
-        mMenu.setLeftBehindContentView(R.layout.menu);
-
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMenu.toggleLeftDrawer();
-            }
-        });
-        ImageView menu_top = (ImageView)mMenu.findViewById(R.id.menu_top);
-        if(Utils.isNight()) {
-            menu_top.setBackgroundResource(R.mipmap.menu_topimage_night);
-        } else{
-            menu_top.setBackgroundResource(R.mipmap.menu_topimage_day);
-        }
-        ListView listView = (ListView)mMenu.findViewById(R.id.listView);
-        listView.setAdapter(new MenuAdapter(this));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayShowHomeEnabled(false);
+//        actionBar.setDisplayShowTitleEnabled(false);
+//        LayoutInflater mInflater = LayoutInflater.from(this);
+//        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+//        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+//                ActionBar. LayoutParams.MATCH_PARENT);
+//
+//        actionBar.setCustomView(mCustomView,layoutParams);
+//        actionBar.setDisplayShowCustomEnabled(true);
+//        Toolbar parent = (Toolbar) mCustomView.getParent();
+//        parent.setContentInsetsAbsolute(0, 0);
+//
+//        ImageButton filter = (ImageButton)mCustomView.findViewById(R.id.btn_filter);
+//        ImageButton menu = (ImageButton)mCustomView.findViewById(R.id.btn_menu);
+//
+//        filter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (filterLayout.getVisibility() == View.VISIBLE) {
+//                    filterLayout.setVisibility(View.INVISIBLE);
+//                } else {
+//                    filterLayout.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+//
+//        final SimpleSideDrawer mMenu = new SimpleSideDrawer(this);
+//        mMenu.setLeftBehindContentView(R.layout.menu);
+//
+//        menu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mMenu.toggleLeftDrawer();
+//            }
+//        });
+//        ImageView menu_top = (ImageView)mMenu.findViewById(R.id.menu_top);
+//        if(Utils.isNight()) {
+//            menu_top.setBackgroundResource(R.mipmap.menu_topimage_night);
+//        } else{
+//            menu_top.setBackgroundResource(R.mipmap.menu_topimage_day);
+//        }
+//        ListView listView = (ListView)mMenu.findViewById(R.id.listView);
+//        listView.setAdapter(new MenuAdapter(this));
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
 
     }
 
@@ -745,6 +784,7 @@ public class MainActivity extends ActionBarActivity {
         categoryStatus.setText(nodeConstruct.completeDate + "完成");
         categoryMood.setImageResource(R.mipmap.emoticon_happy);
         categoryStatus.setTextColor(Color.parseColor("#e8a032"));
+
 
         Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
         amAlpha.setDuration(500);

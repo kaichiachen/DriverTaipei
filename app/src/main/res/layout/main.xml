@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/rootView"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <fragment android:name="com.google.android.gms.maps.SupportMapFragment" android:id="@+id/map" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <RelativeLayout
+        android:background="@color/action_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/bar_layout">
+        <ImageButton
+            android:id="@+id/btn_menu"
+            android:background="@mipmap/menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <ImageButton
+            android:id="@+id/btn_filter"
+            android:background="@drawable/filter_outline"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+    <fragment android:name="com.google.android.gms.maps.SupportMapFragment" android:id="@+id/map" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@+id/bar_layout"/>
     <LinearLayout android:orientation="vertical" android:id="@+id/filter_layout" android:background="@mipmap/card_filter" android:visibility="invisible" android:layout_width="150dp" android:layout_height="200dp" android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:alpha="0.9">
         <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="5.0dip" android:layout_weight="1.0">
             <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/petrolstation" android:layout_weight="3.0" />

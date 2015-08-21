@@ -56,7 +56,7 @@ public class LoadingActivity extends Activity {
             public void run() {
                 time++;
                 Log.d(TAG,"timer: "+time);
-                if (time > 2 && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded && isTrafficDownloaded) {
+                if (time > 2){// && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded && isTrafficDownloaded) {
                     handler.removeCallbacks(this);
                     Intent i = new Intent(LoadingActivity.this, MainActivity.class);
                     ctx.startActivity(i);
