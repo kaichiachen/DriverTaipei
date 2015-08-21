@@ -170,7 +170,6 @@ public class LoadingActivity extends Activity {
             }
         });
         DataManager.getInstance().downloadParkingLotData();
-        DataManager.getInstance().downloadCarFlowData();
         DataManager.getInstance().downloadGasData();
         DataManager.getInstance().downloadConstructData();
         DataManager.getInstance().downloadTrafficData();
