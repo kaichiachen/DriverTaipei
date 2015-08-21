@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -90,6 +91,12 @@ public class MainActivity extends FragmentActivity {
     private boolean constructIsCheck = true;
     private boolean carFlowIsCheck = true;
 
+    List<NodeCarFlow> nodeCarFlow;
+    List<NodeParkingLot> nodeParkingLot;
+    List<NodeGas> nodeGas;
+    List<NodeConstruct> nodeConstruct;
+    List<NodeTraffic> nodeTraffic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,6 +157,12 @@ public class MainActivity extends FragmentActivity {
         carFlowCheckBox = (CheckBox)findViewById(R.id.carFlow_checkBox);
         constructCheckBox = (CheckBox)findViewById(R.id.construct_checkBox);
 
+        carFlowData = new HashMap<GroundOverlay, NodeCarFlow>();
+        gasData = new HashMap<Marker, NodeGas>();
+        parkingLotData = new HashMap<Marker, NodeParkingLot>();
+        constructData = new HashMap<Marker, NodeConstruct>();
+        trafficData = new HashMap<Marker, NodeTraffic>();
+
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
@@ -186,9 +199,9 @@ public class MainActivity extends FragmentActivity {
                 if (cameraPosition.zoom < 16.5) {
                     insideScale = true;
                 } else {
-                    insideScale = true;
+                    insideScale = false;
                 }
-               // updateMarker();
+                updateMarker(cameraPosition.target);
             }
         });
 
@@ -242,65 +255,16 @@ public class MainActivity extends FragmentActivity {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
-    private void setActionBar(){
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayShowHomeEnabled(false);
-//        actionBar.setDisplayShowTitleEnabled(false);
-//        LayoutInflater mInflater = LayoutInflater.from(this);
-//        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
-//        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-//                ActionBar. LayoutParams.MATCH_PARENT);
-//
-//        actionBar.setCustomView(mCustomView,layoutParams);
-//        actionBar.setDisplayShowCustomEnabled(true);
-//        Toolbar parent = (Toolbar) mCustomView.getParent();
-//        parent.setContentInsetsAbsolute(0, 0);
-//
-//        ImageButton filter = (ImageButton)mCustomView.findViewById(R.id.btn_filter);
-//        ImageButton menu = (ImageButton)mCustomView.findViewById(R.id.btn_menu);
-//
-//        filter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (filterLayout.getVisibility() == View.VISIBLE) {
-//                    filterLayout.setVisibility(View.INVISIBLE);
-//                } else {
-//                    filterLayout.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//
-//        final SimpleSideDrawer mMenu = new SimpleSideDrawer(this);
-//        mMenu.setLeftBehindContentView(R.layout.menu);
-//
-//        menu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mMenu.toggleLeftDrawer();
-//            }
-//        });
-//        ImageView menu_top = (ImageView)mMenu.findViewById(R.id.menu_top);
-//        if(Utils.isNight()) {
-//            menu_top.setBackgroundResource(R.mipmap.menu_topimage_night);
-//        } else{
-//            menu_top.setBackgroundResource(R.mipmap.menu_topimage_day);
-//        }
-//        ListView listView = (ListView)mMenu.findViewById(R.id.listView);
-//        listView.setAdapter(new MenuAdapter(this));
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
-
-    }
-
-    private void updateMarker(){
-        if(insideScale){
+    private void updateMarker(LatLng cameraPosition){
+        if(true){
             if(gasIsCheck) {
                 for (Marker marker : gasData.keySet()) {
-                    marker.setVisible(true);
+                    marker.remove();
+                }
+                for(int i = 0;i< nodeGas.size();i++) {
+                    if(getDistance(new LatLng(nodeGas.get(i).lat,nodeGas.get(i).lon),cameraPosition) < 500) {
+                        setGasInfo(nodeGas.get(i));
+                    }
                 }
             } else {
                 for (Marker marker : gasData.keySet()) {
@@ -309,7 +273,12 @@ public class MainActivity extends FragmentActivity {
             }
             if(parkingLotIsCheck) {
                 for (Marker marker : parkingLotData.keySet()) {
-                    marker.setVisible(true);
+                    marker.remove();
+                }
+                for(int i = 0;i< nodeParkingLot.size();i++) {
+                    if(getDistance(new LatLng(nodeParkingLot.get(i).lat,nodeParkingLot.get(i).lon),cameraPosition) < 500) {
+                        setParkingInfo(nodeParkingLot.get(i));
+                    }
                 }
             } else {
                 for (Marker marker : parkingLotData.keySet()) {
@@ -318,10 +287,21 @@ public class MainActivity extends FragmentActivity {
             }
             if(constructIsCheck) {
                 for (Marker marker : constructData.keySet()) {
-                    marker.setVisible(true);
+                    marker.remove();
                 }
+                for(int i = 0;i< nodeConstruct.size();i++) {
+                    if(getDistance(new LatLng(nodeConstruct.get(i).lat,nodeConstruct.get(i).lon),cameraPosition) < 500) {
+                        setConstructInfo(nodeConstruct.get(i));
+                    }
+                }
+
                 for (Marker marker : trafficData.keySet()) {
-                    marker.setVisible(true);
+                    marker.remove();
+                }
+                for(int i = 0;i< nodeTraffic.size();i++) {
+                    if(getDistance(new LatLng(nodeTraffic.get(i).lat,nodeTraffic.get(i).lon),cameraPosition) < 500) {
+                        setTrafficInfo(nodeTraffic.get(i));
+                    }
                 }
             } else {
                 for (Marker marker : constructData.keySet()) {
@@ -333,7 +313,12 @@ public class MainActivity extends FragmentActivity {
             }
             if(carFlowIsCheck) {
                 for (GroundOverlay canvas : carFlowData.keySet()) {
-                    canvas.setVisible(true);
+                    canvas.remove();
+                }
+                for(int i = 0;i< nodeCarFlow.size();i++) {
+                    if(getDistance(nodeCarFlow.get(i).centerLocation,cameraPosition) < 500) {
+                        setCarFlowInfo(nodeCarFlow.get(i));
+                    }
                 }
             } else {
                 for (GroundOverlay canvas : carFlowData.keySet()) {
@@ -346,6 +331,20 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    public double getDistance(LatLng start,LatLng end){
+        double lat1 = (Math.PI/180)*start.latitude;
+        double lat2 = (Math.PI/180)*end.latitude;
+
+        double lon1 = (Math.PI/180)*start.longitude;
+        double lon2 = (Math.PI/180)*end.longitude;
+
+        double R = 6371;
+
+        double d =  Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1))*R;
+
+        return d*1000;
+    }
+
     private void invisibaleizeMarker(){
         for (Marker marker : gasData.keySet()) {
             marker.setVisible(false);
@@ -356,9 +355,9 @@ public class MainActivity extends FragmentActivity {
         for (Marker marker : constructData.keySet()) {
             marker.setVisible(false);
         }
-//        for (GroundOverlay canvas : carFlowData.keySet()) {
-//            canvas.setVisible(false);
-//        }
+        for (GroundOverlay canvas : carFlowData.keySet()) {
+            canvas.setVisible(false);
+        }
     }
 
     private void filterImplement(){
@@ -468,27 +467,27 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onGasDataUpdate(List<NodeGas> gasList) {
-                setGasInfo(gasList);
+                nodeGas = gasList;
             }
 
             @Override
             public void onParkingLotDataUpdate(List<NodeParkingLot> parkingLotList) {
-                setParkingInfo(parkingLotList);
+                nodeParkingLot = parkingLotList;
             }
 
             @Override
             public void onConstructDataUpdate(List<NodeConstruct> constructList) {
-                setConstructInfo(constructList);
+                nodeConstruct = constructList;
             }
 
             @Override
             public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList) {
-                //setCarFlowInfo(carFlowList);
+                nodeCarFlow = carFlowList;
             }
 
             @Override
             public void onTrafficDataUpdate(List<NodeTraffic> trafficList) {
-                setTrafficInfo(trafficList);
+                nodeTraffic = trafficList;
             }
         });
         DataManager.getInstance().updateData();
@@ -520,14 +519,11 @@ public class MainActivity extends FragmentActivity {
             categoryPayMent.startAnimation(amAlpha);
     }
 
-    private void setGasInfo(List<NodeGas> nodeGase){
-        gasData = new HashMap<Marker,NodeGas>();
-        for(int i = 0;i< nodeGase.size();i++) {
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(nodeGase.get(i).lat, nodeGase.get(i).lon))
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_petrolstation)));
-            gasData.put(marker,nodeGase.get(i));
-        }
+    private void setGasInfo(NodeGas nodeGase){
+        Marker marker = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(nodeGase.lat, nodeGase.lon))
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_petrolstation)));
+        gasData.put(marker,nodeGase);
     }
 
     private void showCard(NodeGas nodeGas){
@@ -601,15 +597,11 @@ public class MainActivity extends FragmentActivity {
         categoryNavigation.startAnimation(amAlpha);
     }
 
-    private void setParkingInfo(List<NodeParkingLot> nodeParkingLots){
-        parkingLotData = new HashMap<Marker,NodeParkingLot>();
-        for(int i = 0;i< nodeParkingLots.size();i++) {
-
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(nodeParkingLots.get(i).lat, nodeParkingLots.get(i).lon))
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_parkinglot)));
-            parkingLotData.put(marker,nodeParkingLots.get(i));
-        }
+    private void setParkingInfo(NodeParkingLot nodeParkingLot){
+        Marker marker = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(nodeParkingLot.lat, nodeParkingLot.lon))
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_parkinglot)));
+        parkingLotData.put(marker,nodeParkingLot);
     }
 
     private void showCard(final NodeParkingLot nodeParkingLot){
@@ -726,24 +718,14 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
-    private void setConstructInfo(List<NodeConstruct> nodeConstruct){
-        constructData = new HashMap<Marker,NodeConstruct>();
-        for(int i = 0;i< nodeConstruct.size();i++) {
-            Marker marker = null;
-            if(nodeConstruct.get(i).isToday) {
-                marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(nodeConstruct.get(i).lat, nodeConstruct.get(i).lon))
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
-            } else {
-                marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(nodeConstruct.get(i).lat, nodeConstruct.get(i).lon))
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_constructionsite)));
-            }
-            constructData.put(marker,nodeConstruct.get(i));
-        }
+    private void setConstructInfo(NodeConstruct nodeConstruct){
+        Marker marker = null;
+        marker = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(nodeConstruct.lat, nodeConstruct.lon))
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_constructionsite)));
+        constructData.put(marker,nodeConstruct);
+
     }
-
-
 
     private void showCard(final NodeConstruct nodeConstruct){
         detailLinearLayout.removeAllViews();
@@ -807,36 +789,30 @@ public class MainActivity extends FragmentActivity {
         detailBar.startAnimation(amAlpha);
     }
 
-    private void setCarFlowInfo(List<NodeCarFlow> nodeCarFlows){
-        carFlowData = new HashMap<GroundOverlay,NodeCarFlow>();
-        for(int i = 0;i< nodeCarFlows.size();i++) {
-            GroundOverlay overlay = null;
-            if(nodeCarFlows.get(i).level == NodeCarFlow.carFlowLevel.LOW){
-                overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
-                        .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_red))
-                        .position(nodeCarFlows.get(i).centerLocation, nodeCarFlows.get(i).width, nodeCarFlows.get(i).height));
-            } else if(nodeCarFlows.get(i).level == NodeCarFlow.carFlowLevel.MEDIUM){
-                overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
-                        .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_red))
-                        .position(nodeCarFlows.get(i).centerLocation, nodeCarFlows.get(i).width, nodeCarFlows.get(i).height));
-            } else {
-                overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
-                        .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_green))
-                        .position(nodeCarFlows.get(i).centerLocation, nodeCarFlows.get(i).width, nodeCarFlows.get(i).height));
-            }
-            carFlowData.put(overlay,nodeCarFlows.get(i));
+    private void setCarFlowInfo(NodeCarFlow nodeCarFlow){
+        GroundOverlay overlay = null;
+        if (nodeCarFlow.level == NodeCarFlow.carFlowLevel.LOW) {
+            overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
+                    .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_red))
+                    .position(nodeCarFlow.centerLocation, nodeCarFlow.width, nodeCarFlow.height));
+        } else if (nodeCarFlow.level == NodeCarFlow.carFlowLevel.MEDIUM) {
+            overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
+                    .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_red))
+                    .position(nodeCarFlow.centerLocation, nodeCarFlow.width, nodeCarFlow.height));
+        } else {
+            overlay = mMap.addGroundOverlay(new GroundOverlayOptions()
+                    .image(BitmapDescriptorFactory.fromResource(R.mipmap.road_green))
+                    .position(nodeCarFlow.centerLocation, nodeCarFlow.width, nodeCarFlow.height));
         }
+        carFlowData.put(overlay, nodeCarFlow);
     }
 
-    private void setTrafficInfo(List<NodeTraffic> nodeTraffic){
-        trafficData = new HashMap<Marker,NodeTraffic>();
-        for (int i =0 ;i< nodeTraffic.size();i++){
-            Marker marker = null;
-            marker = mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
-            trafficData.put(marker, nodeTraffic.get(i));
-        }
+    private void setTrafficInfo(NodeTraffic nodeTraffic){
+        Marker marker = null;
+        marker = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(nodeTraffic.lat, nodeTraffic.lon))
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
+        trafficData.put(marker, nodeTraffic);
     }
 
 

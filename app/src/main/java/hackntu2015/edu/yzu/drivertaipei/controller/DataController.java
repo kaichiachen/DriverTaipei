@@ -223,7 +223,6 @@ public class DataController {
     }
 
     public List<NodeParkingLot> getParkingLotData(){
-        nodeParkingLots.add(new NodeParkingLot());
         return nodeParkingLots;
     }
 
