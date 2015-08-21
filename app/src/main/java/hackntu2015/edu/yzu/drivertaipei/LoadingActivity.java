@@ -1,10 +1,12 @@
 package hackntu2015.edu.yzu.drivertaipei;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -52,17 +54,19 @@ public class LoadingActivity extends Activity {
 
         Runnable loading = new Runnable(){
 
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void run() {
                 time++;
                 Log.d(TAG,"timer: "+time);
-                if (time > 2){// && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded && isTrafficDownloaded) {
+                if (time > 2 && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded && isTrafficDownloaded && isParkingLotDownloaded) {
+                    Log.i(TAG,"timer: "+time);
                     handler.removeCallbacks(this);
                     Intent i = new Intent(LoadingActivity.this, MainActivity.class);
                     ctx.startActivity(i);
                     finish();
                     return;
-                } else if(time > 300000){
+                } else if(time > 30){
                     handler.removeCallbacks(this);
                     AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
                     alert.setMessage("網路連線不良").setPositiveButton("確定", new DialogInterface.OnClickListener() {
@@ -77,7 +81,7 @@ public class LoadingActivity extends Activity {
                         }
                     }).show();
                     return;
-                } else if(time>2){
+                } else if(time>3){
                     loadingBar.setVisibility(View.VISIBLE);
                 }
                 handler.postDelayed(this,1000);
@@ -123,6 +127,7 @@ public class LoadingActivity extends Activity {
                 Log.i(TAG, "Traffic Data Download Complete");
             }
 
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataDownloadFailed(ErrorCode err, DataController.DataType dataType) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
