@@ -742,7 +742,7 @@ public class MainActivity extends ActionBarActivity {
         categoryStatus.setGravity(Gravity.CENTER);
         detailLinearLayout.addView(categoryStatus);
 
-        categoryStatus.setText(nodeConstruct.completeDate+"完成");
+        categoryStatus.setText(nodeConstruct.completeDate + "完成");
         categoryMood.setImageResource(R.mipmap.emoticon_happy);
         categoryStatus.setTextColor(Color.parseColor("#e8a032"));
 
@@ -798,6 +798,7 @@ public class MainActivity extends ActionBarActivity {
             trafficData.put(marker, nodeTraffic.get(i));
         }
     }
+
 
     private void showCard(final NodeTraffic nodeTraffic){
         detailLinearLayout.removeAllViews();
