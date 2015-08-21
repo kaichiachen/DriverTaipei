@@ -127,6 +127,7 @@ public class MainActivity extends FragmentActivity {
         }
         ListView listView = (ListView)mMenu.findViewById(R.id.listView);
         listView.setAdapter(new MenuAdapter(this));
+        listView.setDivider(null);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -324,9 +325,8 @@ public class MainActivity extends FragmentActivity {
                 }
             }
 
-        } else {
-            invisibaleizeMarker();
-        }
+            //invisibaleizeMarker();
+
     }
 
     public double getDistance(LatLng start,LatLng end){
