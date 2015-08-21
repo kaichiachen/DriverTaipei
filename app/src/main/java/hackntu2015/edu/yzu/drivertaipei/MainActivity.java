@@ -220,6 +220,7 @@ public class MainActivity extends ActionBarActivity {
         ImageButton filter = (ImageButton)mCustomView.findViewById(R.id.btn_filter);
         ImageButton menu = (ImageButton)mCustomView.findViewById(R.id.btn_menu);
 
+
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,6 +249,7 @@ public class MainActivity extends ActionBarActivity {
         }
         ListView listView = (ListView)mMenu.findViewById(R.id.listView);
         listView.setAdapter(new MenuAdapter(this));
+        listView.setDivider(null);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
