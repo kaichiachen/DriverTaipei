@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:id="@+id/filter_layout" android:background="@mipmap/card_filter"  android:layout_width="150dp" android:layout_height="200dp" android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:alpha="0.9">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="5dp" android:layout_weight="1.0">
+        <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/petrolstation" android:layout_weight="3.0" />
+        <TextView android:textSize="15sp" android:textColor="#000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="加油站" android:layout_weight="2.0"/>
+        <CheckBox android:id="@+id/gas_checkBox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:checked="true" android:button="@drawable/checkboxselector" android:text="" android:layout_weight="3.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="0.0dip" android:layout_weight="1.0">
+        <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/parkingdark" android:layout_weight="3.0" />
+        <TextView android:textSize="15.0sp" android:textColor="#ff000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="停車場" android:layout_weight="2.0" />
+        <CheckBox android:id="@+id/parkingLot_checkBox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:checked="true" android:button="@drawable/checkboxselector" android:text="" android:layout_weight="3.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="0.0dip" android:layout_weight="1.0">
+        <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/warning" android:layout_weight="3.0" />
+        <TextView android:textSize="15.0sp" android:textColor="#ff000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="施工" android:layout_weight="2.0" />
+        <CheckBox android:id="@+id/construct_checkBox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:checked="true" android:button="@drawable/checkboxselector" android:text="" android:layout_weight="3.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="0.0dip" android:layout_weight="1.0">
+        <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/road" android:layout_weight="3.0" />
+        <TextView android:textSize="15.0sp" android:textColor="#ff000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="路況" android:layout_weight="2.0" />
+        <CheckBox android:id="@+id/carFlow_checkBox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:checked="true" android:button="@drawable/checkboxselector" android:text="" android:layout_weight="3.0" />
+    </LinearLayout>
+</LinearLayout>

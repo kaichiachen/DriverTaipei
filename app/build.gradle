@@ -13,7 +13,7 @@ android {
     buildToolsVersion "21.1.2"
     defaultConfig {
         applicationId "hackntu2015.edu.yzu.drivertaipei"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -22,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.hackntu2015
         }
         debug {
             signingConfig signingConfigs.hackntu2015
