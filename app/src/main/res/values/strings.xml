@@ -1,6 +1,30 @@
 <resources>
-    <string name="app_name">DriverTaipei</string>
-    <string name="title_activity_main">Map</string>
-    <string name="longitude">經度：</string>
-    <string name="latitude">緯度：</string>
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string name="app_name">DriverTaipei</string>
+        <string name="title_activity_main">Map</string>
+        <string name="longitude">Longitude：</string>
+        <string name="latitude">Latitude：</string>
+        <string name="complete">Complete</string>
+
+        <!--Parking-->
+        <string name="parking">There are parking spaces</string>
+        <string name="no_parking">No parking spaces</string>
+
+        <!--hadOil-->
+        <string name="self">Self</string>
+        <string name="no_self">非自助</string>
+        <string name="non_operating_in">Non- Self</string>
+
+        <!--Menu-->
+        <string name="settings">Settings</string>
+        <string name="help">Help</string>
+        <string name="about">About</string>
+
+        <!--Loading-->
+        <string name="network_error">Network Error</string>
+        <string name="ok">OK</string>
+        <string name="data_error">Data error</string>
+
+    </resources>
 </resources>
