@@ -28,7 +28,7 @@
             android:layout_centerVertical="true" />
     </RelativeLayout>
     <fragment android:name="com.google.android.gms.maps.SupportMapFragment" android:id="@+id/map" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@+id/bar_layout"/>
-    <LinearLayout android:orientation="vertical" android:id="@+id/filter_layout" android:background="@mipmap/card_filter" android:visibility="invisible" android:layout_width="150dp" android:layout_height="200dp" android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:alpha="0.9">
+    <LinearLayout android:orientation="vertical" android:id="@+id/filter_layout" android:background="@drawable/filter_background" android:visibility="invisible" android:layout_width="150dp" android:layout_height="200dp" android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:alpha="1">
         <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="5.0dip" android:layout_weight="1.0">
             <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/petrolstation" android:layout_weight="3.0" />
             <TextView android:textSize="15.0sp" android:textColor="#ff000000" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="加油站" android:layout_weight="2.0" />

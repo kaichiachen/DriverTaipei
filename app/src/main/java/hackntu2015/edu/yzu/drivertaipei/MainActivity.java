@@ -106,6 +106,27 @@ public class MainActivity extends FragmentActivity {
         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                 .getMap();
 
+        mMap.setMyLocationEnabled(true);
+        mMap.setTrafficEnabled(true);
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener(){
+            @Override
+            public void onLocationChanged(Location location){
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
+                locationManager.removeUpdates(this);
+            }
+
+            @Override
+            public void onStatusChanged(String provider,int status,Bundle extras){}
+
+            @Override
+            public void onProviderEnabled(String provider){}
+            @Override
+            public void onProviderDisabled(String provider){}
+        };
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
         menu = (ImageButton)findViewById(R.id.btn_menu);
         filter = (ImageButton)findViewById(R.id.btn_filter);
 
@@ -125,7 +146,7 @@ public class MainActivity extends FragmentActivity {
         } else{
             menu_top.setBackgroundResource(R.mipmap.menu_topimage_day);
         }
-        ListView listView = (ListView)mMenu.findViewById(R.id.listView);
+        ListView listView = (ListView) mMenu.findViewById(R.id.listView);
         listView.setAdapter(new MenuAdapter(this));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -161,16 +182,6 @@ public class MainActivity extends FragmentActivity {
         parkingLotData = new HashMap<Marker, NodeParkingLot>();
         constructData = new HashMap<Marker, NodeConstruct>();
         trafficData = new HashMap<Marker, NodeTraffic>();
-
-        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-
-            }
-        });
-        mMap.setMyLocationEnabled(true);
-
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         updateData();
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -254,79 +265,75 @@ public class MainActivity extends FragmentActivity {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
-    private void updateMarker(LatLng cameraPosition){
-           if(gasIsCheck) {
-                for (Marker marker : gasData.keySet()) {
-                    marker.remove();
-                }
-                for(int i = 0;i< nodeGas.size();i++) {
-                    if(getDistance(new LatLng(nodeGas.get(i).lat,nodeGas.get(i).lon),cameraPosition) < 500) {
-                        setGasInfo(nodeGas.get(i));
-                    }
-                }
-            } else {
-                for (Marker marker : gasData.keySet()) {
-                    marker.setVisible(false);
+    private void updateMarker(LatLng cameraPosition) {
+        if (gasIsCheck) {
+            for (Marker marker : gasData.keySet()) {
+                marker.remove();
+            }
+            for (int i = 0; i < nodeGas.size(); i++) {
+                if (getDistance(new LatLng(nodeGas.get(i).lat, nodeGas.get(i).lon), cameraPosition) < 1000) {
+                    setGasInfo(nodeGas.get(i));
                 }
             }
-            if(parkingLotIsCheck) {
-                for (Marker marker : parkingLotData.keySet()) {
-                    marker.remove();
-                }
-                for(int i = 0;i< nodeParkingLot.size();i++) {
-                    if(getDistance(new LatLng(nodeParkingLot.get(i).lat,nodeParkingLot.get(i).lon),cameraPosition) < 500) {
-                        setParkingInfo(nodeParkingLot.get(i));
-                    }
-                }
-            } else {
-                for (Marker marker : parkingLotData.keySet()) {
-                    marker.setVisible(false);
-                }
-            }
-            if(constructIsCheck) {
-                for (Marker marker : constructData.keySet()) {
-                    marker.remove();
-                }
-                for(int i = 0;i< nodeConstruct.size();i++) {
-                    if(getDistance(new LatLng(nodeConstruct.get(i).lat,nodeConstruct.get(i).lon),cameraPosition) < 500) {
-                        setConstructInfo(nodeConstruct.get(i));
-                    }
-                }
-
-                for (Marker marker : trafficData.keySet()) {
-                    marker.remove();
-                }
-                for(int i = 0;i< nodeTraffic.size();i++) {
-                    if(getDistance(new LatLng(nodeTraffic.get(i).lat,nodeTraffic.get(i).lon),cameraPosition) < 500) {
-                        setTrafficInfo(nodeTraffic.get(i));
-                    }
-                }
-            } else {
-                for (Marker marker : constructData.keySet()) {
-                    marker.setVisible(false);
-                }
-                for (Marker marker : trafficData.keySet()) {
-                    marker.setVisible(false);
-                }
-            }
-            if(carFlowIsCheck) {
-                for (GroundOverlay canvas : carFlowData.keySet()) {
-                    canvas.remove();
-                }
-                for(int i = 0;i< nodeCarFlow.size();i++) {
-                    if(getDistance(nodeCarFlow.get(i).centerLocation,cameraPosition) < 500) {
-                        setCarFlowInfo(nodeCarFlow.get(i));
-                    }
-                }
-            } else {
-                for (GroundOverlay canvas : carFlowData.keySet()) {
-                    canvas.setVisible(false);
-                }
-            }
-
         } else {
-            invisibaleizeMarker();
+            for (Marker marker : gasData.keySet()) {
+                marker.setVisible(false);
+            }
         }
+        if (parkingLotIsCheck) {
+            for (Marker marker : parkingLotData.keySet()) {
+                marker.remove();
+            }
+            for (int i = 0; i < nodeParkingLot.size(); i++) {
+                if (getDistance(new LatLng(nodeParkingLot.get(i).lat, nodeParkingLot.get(i).lon), cameraPosition) < 1000) {
+                    setParkingInfo(nodeParkingLot.get(i));
+                }
+            }
+        } else {
+            for (Marker marker : parkingLotData.keySet()) {
+                marker.setVisible(false);
+            }
+        }
+        if (constructIsCheck) {
+            for (Marker marker : constructData.keySet()) {
+                marker.remove();
+            }
+            for (int i = 0; i < nodeConstruct.size(); i++) {
+                if (getDistance(new LatLng(nodeConstruct.get(i).lat, nodeConstruct.get(i).lon), cameraPosition) < 1000) {
+                    setConstructInfo(nodeConstruct.get(i));
+                }
+            }
+
+            for (Marker marker : trafficData.keySet()) {
+                marker.remove();
+            }
+            for (int i = 0; i < nodeTraffic.size(); i++) {
+                if (getDistance(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon), cameraPosition) < 1000) {
+                    setTrafficInfo(nodeTraffic.get(i));
+                }
+            }
+        } else {
+            for (Marker marker : constructData.keySet()) {
+                marker.setVisible(false);
+            }
+            for (Marker marker : trafficData.keySet()) {
+                marker.setVisible(false);
+            }
+        }
+//        if (carFlowIsCheck) {
+//            for (GroundOverlay canvas : carFlowData.keySet()) {
+//                canvas.remove();
+//            }
+//            for (int i = 0; i < nodeCarFlow.size(); i++) {
+//                if (getDistance(nodeCarFlow.get(i).centerLocation, cameraPosition) < 1000) {
+//                    setCarFlowInfo(nodeCarFlow.get(i));
+//                }
+//            }
+//        } else {
+//            for (GroundOverlay canvas : carFlowData.keySet()) {
+//                canvas.setVisible(false);
+//            }
+//        }
     }
 
     public double getDistance(LatLng start,LatLng end){
@@ -341,21 +348,6 @@ public class MainActivity extends FragmentActivity {
         double d =  Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1))*R;
 
         return d*1000;
-    }
-
-    private void invisibaleizeMarker(){
-        for (Marker marker : gasData.keySet()) {
-            marker.setVisible(false);
-        }
-        for (Marker marker : parkingLotData.keySet()) {
-            marker.setVisible(false);
-        }
-        for (Marker marker : constructData.keySet()) {
-            marker.setVisible(false);
-        }
-        for (GroundOverlay canvas : carFlowData.keySet()) {
-            canvas.setVisible(false);
-        }
     }
 
     private void filterImplement(){
@@ -416,16 +408,11 @@ public class MainActivity extends FragmentActivity {
         carFlowCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked && insideScale) {
-                    for (GroundOverlay canvas : carFlowData.keySet()) {
-                        canvas.setVisible(true);
-                    }
+                if(isChecked){
+                    mMap.setTrafficEnabled(true);
                 } else {
-                    for (GroundOverlay canvas : carFlowData.keySet()) {
-                        canvas.setVisible(false);
-                    }
+                    mMap.setTrafficEnabled(false);
                 }
-                carFlowIsCheck = isChecked;
             }
         });
     }
@@ -480,7 +467,7 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList) {
-                nodeCarFlow = carFlowList;
+                //nodeCarFlow = carFlowList;
             }
 
             @Override
