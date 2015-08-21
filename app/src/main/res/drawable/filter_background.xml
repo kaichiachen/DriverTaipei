@@ -3,16 +3,18 @@
 <!-- Bottom 2dp Shadow -->
 <item>
   <shape>
-    <solid android:color="#BBB" />
-    <corners android:bottomLeftRadius="10dp" android:bottomRightRadius="10dp" android:topLeftRadius="10dp" android:topRightRadius="10dp"/>
+    <solid android:color="#DDDDDD" />
+    <corners android:bottomLeftRadius="5dp" android:bottomRightRadius="5dp" android:topLeftRadius="5dp" android:topRightRadius="5dp"/>
   </shape>
 </item>
 
 <!-- White Top color -->
-<item android:bottom="3px">
+<item
+    android:bottom="2dp"
+    android:left="2dp">
   <shape>
     <solid android:color="#ffeeeeee" />
-    <corners android:bottomLeftRadius="10dp" android:bottomRightRadius="10dp" android:topLeftRadius="10dp" android:topRightRadius="10dp"/>
+    <corners android:bottomLeftRadius="5dp" android:bottomRightRadius="5dp" android:topLeftRadius="5dp" android:topRightRadius="5dp"/>
   </shape>
 </item>
 </layer-list>

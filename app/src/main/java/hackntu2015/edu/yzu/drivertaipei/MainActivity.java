@@ -718,8 +718,6 @@ public class MainActivity extends FragmentActivity {
 
         ImageView categoryIcon;
         AutoResizeTextView categoryTitle;
-        ImageView categoryMood;
-        AutoResizeTextView categoryStatus;
 
         categoryIcon = new ImageView(ctx);
         layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
@@ -736,22 +734,6 @@ public class MainActivity extends FragmentActivity {
         categoryTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         categoryTitle.setGravity(Gravity.CENTER | Gravity.LEFT);
         detailLinearLayout.addView(categoryTitle);
-
-        categoryMood = new ImageView(ctx);
-        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
-        categoryMood.setLayoutParams(layout);
-        detailLinearLayout.addView(categoryMood);
-
-        categoryStatus = new AutoResizeTextView(ctx);
-        categoryStatus.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
-        categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        categoryStatus.setGravity(Gravity.CENTER);
-        detailLinearLayout.addView(categoryStatus);
-
-        categoryStatus.setText(nodeConstruct.completeDate + "完成");
-        categoryMood.setImageResource(R.mipmap.emoticon_happy);
-        categoryStatus.setTextColor(Color.parseColor("#e8a032"));
-
 
         Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
         amAlpha.setDuration(500);
