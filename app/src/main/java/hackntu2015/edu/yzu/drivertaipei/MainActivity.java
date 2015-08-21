@@ -148,6 +148,7 @@ public class MainActivity extends FragmentActivity {
         }
         ListView listView = (ListView) mMenu.findViewById(R.id.listView);
         listView.setAdapter(new MenuAdapter(this));
+        listView.setDivider(null);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -312,6 +313,7 @@ public class MainActivity extends FragmentActivity {
                     setTrafficInfo(nodeTraffic.get(i));
                 }
             }
+<<<<<<< HEAD
         } else {
             for (Marker marker : constructData.keySet()) {
                 marker.setVisible(false);
@@ -334,6 +336,11 @@ public class MainActivity extends FragmentActivity {
 //                canvas.setVisible(false);
 //            }
 //        }
+=======
+
+            //invisibaleizeMarker();
+
+>>>>>>> acd80e219719e614f6d7166667aac2e78529b141
     }
 
     public double getDistance(LatLng start,LatLng end){
