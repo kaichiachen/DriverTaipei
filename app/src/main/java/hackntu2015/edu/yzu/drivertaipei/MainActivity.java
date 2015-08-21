@@ -313,7 +313,6 @@ public class MainActivity extends FragmentActivity {
                     setTrafficInfo(nodeTraffic.get(i));
                 }
             }
-<<<<<<< HEAD
         } else {
             for (Marker marker : constructData.keySet()) {
                 marker.setVisible(false);
@@ -322,25 +321,6 @@ public class MainActivity extends FragmentActivity {
                 marker.setVisible(false);
             }
         }
-//        if (carFlowIsCheck) {
-//            for (GroundOverlay canvas : carFlowData.keySet()) {
-//                canvas.remove();
-//            }
-//            for (int i = 0; i < nodeCarFlow.size(); i++) {
-//                if (getDistance(nodeCarFlow.get(i).centerLocation, cameraPosition) < 1000) {
-//                    setCarFlowInfo(nodeCarFlow.get(i));
-//                }
-//            }
-//        } else {
-//            for (GroundOverlay canvas : carFlowData.keySet()) {
-//                canvas.setVisible(false);
-//            }
-//        }
-=======
-
-            //invisibaleizeMarker();
-
->>>>>>> acd80e219719e614f6d7166667aac2e78529b141
     }
 
     public double getDistance(LatLng start,LatLng end){
