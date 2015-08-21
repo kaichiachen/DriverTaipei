@@ -784,7 +784,69 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void showCar(final NodeTraffic nodeTraffic){
-        
+        LinearLayout.LayoutParams layout;
+
+        ImageView categoryIcon;
+        TextView categoryTitle;
+        ImageView categoryMood;
+        TextView categoryStatus;
+
+        categoryIcon = new ImageView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
+        categoryIcon.setLayoutParams(layout);
+        if(nodeTraffic.isToday){
+            categoryIcon.setImageResource(R.mipmap.warning);
+        }else{
+            categoryIcon.setImageResource(R.mipmap.marker_warning);
+        }
+
+        detailLinearLayout.addView(categoryIcon);
+
+        categoryTitle = new TextView(ctx);
+        categoryTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.08f));
+        categoryTitle.setText(nodeTraffic.status);
+        categoryTitle.setTextColor(Color.BLACK);
+        categoryTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        categoryTitle.setGravity(Gravity.CENTER | Gravity.LEFT);
+        detailLinearLayout.addView(categoryTitle);
+
+        categoryMood = new ImageView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
+        categoryMood.setLayoutParams(layout);
+        detailLinearLayout.addView(categoryMood);
+
+        categoryStatus = new TextView(ctx);
+        categoryStatus.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
+        categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        categoryStatus.setGravity(Gravity.CENTER);
+        detailLinearLayout.addView(categoryStatus);
+
+        //鍇嘉接棒～
+        //if (nodeTraffic.isToday) {
+
+        //} else {
+
+        //}
+
+        Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
+        amAlpha.setDuration(500);
+        amAlpha.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                detailBar.setVisibility(View.VISIBLE);
+                categoryNavigation.setVisibility(View.INVISIBLE);
+                categoryPayMent.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+        });
+        detailBar.startAnimation(amAlpha);
     }
 
     private void setUpMap(Location location) {
