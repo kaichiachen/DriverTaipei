@@ -31,3 +31,6 @@ proguard/
 .DS_store
 
 .idea/
+
+app/app.iml
+
