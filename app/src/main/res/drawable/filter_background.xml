@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- Bottom 2dp Shadow -->
+<item>
+  <shape>
+    <solid android:color="#BBB" />
+    <corners android:bottomLeftRadius="10dp" android:bottomRightRadius="10dp" android:topLeftRadius="10dp" android:topRightRadius="10dp"/>
+  </shape>
+</item>
+
+<!-- White Top color -->
+<item android:bottom="3px">
+  <shape>
     <solid android:color="#ffeeeeee" />
     <corners android:bottomLeftRadius="10dp" android:bottomRightRadius="10dp" android:topLeftRadius="10dp" android:topRightRadius="10dp"/>
-</shape>
+  </shape>
+</item>
+</layer-list>
