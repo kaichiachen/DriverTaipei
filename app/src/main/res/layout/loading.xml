@@ -5,9 +5,12 @@
     android:background="#00458A"
     >
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/splash_logo"/>
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@mipmap/logo_1080_for_logopage"
+        android:layout_marginTop="133dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
     <ProgressBar
         android:id="@+id/loading_progress"
         android:layout_width="50dp"
