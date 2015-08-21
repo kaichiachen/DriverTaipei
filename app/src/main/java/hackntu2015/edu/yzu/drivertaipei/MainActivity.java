@@ -49,6 +49,7 @@ import hackntu2015.edu.yzu.drivertaipei.Node.NodeCarFlow;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeConstruct;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeGas;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeParkingLot;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeTraffic;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataController;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
@@ -77,6 +78,7 @@ public class MainActivity extends ActionBarActivity {
     private HashMap<Marker, NodeParkingLot> parkingLotData;
     private HashMap<Marker, NodeConstruct> constructData;
     private HashMap<GroundOverlay, NodeCarFlow> carFlowData;
+    private HashMap<Marker, NodeTraffic> trafficData;
 
     private Handler uiHandler = new Handler();
     private Marker mSelectMarker;
@@ -408,7 +410,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onGasDataUpdate(List<NodeGas> gasList) {
-               setGasInfo(gasList);
+                setGasInfo(gasList);
             }
 
             @Override
@@ -678,6 +680,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+
+
     private void showCard(final NodeConstruct nodeConstruct){
         detailLinearLayout.removeAllViews();
         LinearLayout.LayoutParams layout;
@@ -764,6 +768,29 @@ public class MainActivity extends ActionBarActivity {
             }
             carFlowData.put(overlay,nodeCarFlows.get(i));
         }
+    }
+
+    private void setTrafficInfo(List<NodeTraffic> nodeTraffic){
+        trafficData = new HashMap<Marker,NodeTraffic>();
+        for (int i =0 ;i< nodeTraffic.size();i++){
+            Marker marker = null;
+            /**
+            if(nodeTraffic.get(i).isToday) {
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
+            } else {
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
+            }
+             **/
+            //constructData.put(marker,nodeTraffic.get(i));
+        }
+    }
+
+    private void showCar(final NodeTraffic nodeTraffic){
+        
     }
 
     private void setUpMap(Location location) {
