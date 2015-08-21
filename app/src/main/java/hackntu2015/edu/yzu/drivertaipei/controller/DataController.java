@@ -121,11 +121,31 @@ public class DataController {
         });
     }
 
+    void downloadTrafficData(){
+        RequestClient.requestTraffic(new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseString, Throwable throwable) {
+                Log.e(TAG, "Traffic Data request fail: " + statusCode);
+                //notifyFailure(ErrorCode.ERR_WRONGURL);
+                mListener.onTrafficDataDownloadComplete();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.i(TAG, "Traffic request success: " + response.toString());
+                setTrafficsData(response);
+                mListener.onTrafficDataDownloadComplete();
+            }
+        });
+    }
+
     void updateData(){
         mListener.onGasDataUpdate(getGasData());
         mListener.onParkingLotDataUpdate(getParkingLotData());
         mListener.onConstructDataUpdate(getConstructData());
         mListener.onCarFlowDataUpdate(getCarFlowData());
+        mListener.onTrafficDataUpdate(getTrafficData());
     }
 
     private void setGasData(JSONArray ja){
@@ -188,11 +208,9 @@ public class DataController {
     }
 
     public List<NodeGas> getGasData(){
-        nodeGas.add(new NodeGas());
         return nodeGas;
     }
     public List<NodeCarFlow> getCarFlowData(){
-        nodeCarFlows.add(new NodeCarFlow());
         return nodeCarFlows;
     }
 
@@ -201,7 +219,6 @@ public class DataController {
     }
 
     public List<NodeConstruct> getConstructData(){
-        nodeConstructs.add(new NodeConstruct());
         return nodeConstructs;
     }
 

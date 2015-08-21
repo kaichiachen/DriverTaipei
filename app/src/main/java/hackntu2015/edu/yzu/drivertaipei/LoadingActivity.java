@@ -17,6 +17,7 @@ import hackntu2015.edu.yzu.drivertaipei.Node.NodeCarFlow;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeConstruct;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeGas;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeParkingLot;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeTraffic;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataController;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
@@ -33,6 +34,7 @@ public class LoadingActivity extends Activity {
     boolean isConstructDownloaded = false;
     boolean isCarFLowDownloaded = false;
     boolean isGasDownloaded = false;
+    boolean isTrafficDownloaded = false;
     int loadingCount = 0;
     Context ctx;
 
@@ -53,14 +55,14 @@ public class LoadingActivity extends Activity {
             @Override
             public void run() {
                 time++;
-                Log.e(TAG,"timer: "+time);
-                if (time > 2 && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded) {
+                Log.d(TAG,"timer: "+time);
+                if (time > 2 && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded && isTrafficDownloaded) {
                     handler.removeCallbacks(this);
                     Intent i = new Intent(LoadingActivity.this, MainActivity.class);
                     ctx.startActivity(i);
                     finish();
                     return;
-                } else if(time > 30){
+                } else if(time > 300000){
                     handler.removeCallbacks(this);
                     AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
                     alert.setMessage("網路連線不良").setPositiveButton("確定", new DialogInterface.OnClickListener() {
@@ -90,24 +92,35 @@ public class LoadingActivity extends Activity {
             public void onParkingLotDataDownloadComplete() {
                 loadingCount++;
                 isParkingLotDownloaded = true;
+                Log.i(TAG, "ParkingLog Data Download Complete");
             }
 
             @Override
             public void onGasDataDownloadComplete() {
                 loadingCount++;
                 isGasDownloaded = true;
+                Log.i(TAG, "Gas Data Download Complete");
             }
 
             @Override
             public void onConstructDataDownloadComplete() {
                 loadingCount++;
                 isConstructDownloaded = true;
+                Log.i(TAG, "Construct Data Download Complete");
             }
 
             @Override
             public void onCarFlowDataDownloadComplete() {
                 loadingCount++;
                 isCarFLowDownloaded = true;
+                Log.i(TAG, "CarFlow Data Download Complete");
+            }
+
+            @Override
+            public void onTrafficDataDownloadComplete() {
+                loadingCount++;
+                isTrafficDownloaded = true;
+                Log.i(TAG, "Traffic Data Download Complete");
             }
 
             @Override
@@ -145,11 +158,17 @@ public class LoadingActivity extends Activity {
             public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList) {
 
             }
+
+            @Override
+            public void onTrafficDataUpdate(List<NodeTraffic> trafficList) {
+
+            }
         });
         DataManager.getInstance().downloadParkingLotData();
         DataManager.getInstance().downloadCarFlowData();
         DataManager.getInstance().downloadGasData();
         DataManager.getInstance().downloadConstructData();
+        DataManager.getInstance().downloadTrafficData();
     }
 
     @Override

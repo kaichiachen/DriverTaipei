@@ -6,6 +6,7 @@ import hackntu2015.edu.yzu.drivertaipei.Node.NodeCarFlow;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeConstruct;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeGas;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeParkingLot;
+import hackntu2015.edu.yzu.drivertaipei.Node.NodeTraffic;
 import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
 
 /**
@@ -17,6 +18,7 @@ public interface DataListener {
     public void onGasDataDownloadComplete();
     public void onConstructDataDownloadComplete();
     public void onCarFlowDataDownloadComplete();
+    public void onTrafficDataDownloadComplete();
 
     public void onDataDownloadFailed(ErrorCode err,DataController.DataType dataType);
 
@@ -24,4 +26,5 @@ public interface DataListener {
     public void onParkingLotDataUpdate(List<NodeParkingLot> parkingLotList);
     public void onConstructDataUpdate(List<NodeConstruct> constructList);
     public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList);
+    public void onTrafficDataUpdate(List<NodeTraffic> trafficList);
 }

@@ -53,7 +53,9 @@ import hackntu2015.edu.yzu.drivertaipei.Node.NodeTraffic;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataController;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
+import hackntu2015.edu.yzu.drivertaipei.utils.AutoResizeTextView;
 import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
+import hackntu2015.edu.yzu.drivertaipei.utils.Utils;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -116,25 +118,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         mMap.setMyLocationEnabled(true);
-        LocationListener locationListener = new LocationListener(){
-            @Override
-            public void onLocationChanged(Location location){
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
-                locationManager.removeUpdates(this);
-            }
-
-            @Override
-            public void onStatusChanged(String provider,int status,Bundle extras){}
-
-            @Override
-            public void onProviderEnabled(String provider){}
-            @Override
-            public void onProviderDisabled(String provider){}
-        };
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
         updateData();
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -147,6 +132,8 @@ public class MainActivity extends ActionBarActivity {
                     showCard(parkingLotData.get(marker));
                 } else if (constructData.get(marker) != null) {
                     showCard(constructData.get(marker));
+                } else if (trafficData.get(marker) != null){
+                    showCard(trafficData.get(marker));
                 }
                 return true;
             }
@@ -158,7 +145,7 @@ public class MainActivity extends ActionBarActivity {
                 if (detailBar.getVisibility() == View.VISIBLE)
                     removeCard();
                 if (cameraPosition.zoom < 16.5) {
-                    insideScale = false;
+                    insideScale = true;
                 } else {
                     insideScale = true;
                 }
@@ -197,6 +184,23 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        LocationListener locationListener = new LocationListener(){
+            @Override
+            public void onLocationChanged(Location location){
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
+                locationManager.removeUpdates(this);
+            }
+
+            @Override
+            public void onStatusChanged(String provider,int status,Bundle extras){}
+
+            @Override
+            public void onProviderEnabled(String provider){}
+            @Override
+            public void onProviderDisabled(String provider){}
+        };
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     private void setActionBar(){
@@ -237,7 +241,11 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         ImageView menu_top = (ImageView)mMenu.findViewById(R.id.menu_top);
-        menu_top.setBackgroundResource(R.mipmap.menu_topimage_day);
+        if(Utils.isNight()) {
+            menu_top.setBackgroundResource(R.mipmap.menu_topimage_night);
+        } else{
+            menu_top.setBackgroundResource(R.mipmap.menu_topimage_day);
+        }
         ListView listView = (ListView)mMenu.findViewById(R.id.listView);
         listView.setAdapter(new MenuAdapter(this));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -273,8 +281,14 @@ public class MainActivity extends ActionBarActivity {
                 for (Marker marker : constructData.keySet()) {
                     marker.setVisible(true);
                 }
+                for (Marker marker : trafficData.keySet()) {
+                    marker.setVisible(true);
+                }
             } else {
                 for (Marker marker : constructData.keySet()) {
+                    marker.setVisible(false);
+                }
+                for (Marker marker : trafficData.keySet()) {
                     marker.setVisible(false);
                 }
             }
@@ -348,8 +362,14 @@ public class MainActivity extends ActionBarActivity {
                     for (Marker marker : constructData.keySet()) {
                         marker.setVisible(true);
                     }
+                    for (Marker marker : trafficData.keySet()) {
+                        marker.setVisible(true);
+                    }
                 } else {
                     for (Marker marker : constructData.keySet()) {
+                        marker.setVisible(false);
+                    }
+                    for (Marker marker : trafficData.keySet()) {
                         marker.setVisible(false);
                     }
                 }
@@ -398,6 +418,11 @@ public class MainActivity extends ActionBarActivity {
             }
 
             @Override
+            public void onTrafficDataDownloadComplete() {
+
+            }
+
+            @Override
             public void onDataDownloadFailed(ErrorCode err, DataController.DataType dataType) {
 
             }
@@ -420,6 +445,11 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList) {
                 //setCarFlowInfo(carFlowList);
+            }
+
+            @Override
+            public void onTrafficDataUpdate(List<NodeTraffic> trafficList) {
+                setTrafficInfo(trafficList);
             }
         });
         DataManager.getInstance().updateData();
@@ -466,9 +496,9 @@ public class MainActivity extends ActionBarActivity {
         LinearLayout.LayoutParams layout;
 
         ImageView categoryIcon;
-        TextView categoryTitle;
+        AutoResizeTextView categoryTitle;
         ImageView categoryMood;
-        TextView categoryStatus;
+        AutoResizeTextView categoryStatus;
 
         categoryIcon = new ImageView(ctx);
         layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.14f);
@@ -476,7 +506,7 @@ public class MainActivity extends ActionBarActivity {
         categoryIcon.setImageResource(R.mipmap.gas_petrol_station_md);
         detailLinearLayout.addView(categoryIcon);
 
-        categoryTitle = new TextView(ctx);
+        categoryTitle = new AutoResizeTextView(ctx);
         categoryTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
         categoryTitle.setText(nodeGas.name);
         categoryTitle.setTextColor(Color.BLACK);
@@ -489,7 +519,7 @@ public class MainActivity extends ActionBarActivity {
         categoryMood.setLayoutParams(layout);
         detailLinearLayout.addView(categoryMood);
 
-        categoryStatus = new TextView(ctx);
+        categoryStatus = new AutoResizeTextView(ctx);
         categoryStatus.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
         categoryStatus.setTextColor(Color.RED);
         categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -548,11 +578,11 @@ public class MainActivity extends ActionBarActivity {
         LinearLayout.LayoutParams layout;
 
         ImageView categoryCarIcon;
-        TextView categoryCarCount;
+        AutoResizeTextView categoryCarCount;
         ImageView categoryMotorIcon;
-        TextView categoryMotrorCount;
+        AutoResizeTextView categoryMotrorCount;
         ImageView categoryMood;
-        TextView categoryStatus;
+        AutoResizeTextView categoryStatus;
 
         categoryCarIcon = new ImageView(ctx);
         layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.14f);
@@ -560,7 +590,7 @@ public class MainActivity extends ActionBarActivity {
         categoryCarIcon.setLayoutParams(layout);
         detailLinearLayout.addView(categoryCarIcon);
 
-        categoryCarCount = new TextView(ctx);
+        categoryCarCount = new AutoResizeTextView(ctx);
         layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.14f);
         if(nodeParkingLot.availableCar < 10)
             layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.15f);
@@ -576,7 +606,7 @@ public class MainActivity extends ActionBarActivity {
         categoryMotorIcon.setImageResource(R.mipmap.parking_bike_dark);
         detailLinearLayout.addView(categoryMotorIcon);
 
-        categoryMotrorCount = new TextView(ctx);
+        categoryMotrorCount = new AutoResizeTextView(ctx);
         layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.14f);
         if(nodeParkingLot.availableMotor < 10)
             layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.15f);
@@ -591,7 +621,7 @@ public class MainActivity extends ActionBarActivity {
         categoryMood.setLayoutParams(layout);
         detailLinearLayout.addView(categoryMood);
 
-        categoryStatus = new TextView(ctx);
+        categoryStatus = new AutoResizeTextView(ctx);
         categoryStatus.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
         categoryStatus.setTextColor(Color.RED);
         categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -681,9 +711,9 @@ public class MainActivity extends ActionBarActivity {
         LinearLayout.LayoutParams layout;
 
         ImageView categoryIcon;
-        TextView categoryTitle;
+        AutoResizeTextView categoryTitle;
         ImageView categoryMood;
-        TextView categoryStatus;
+        AutoResizeTextView categoryStatus;
 
         categoryIcon = new ImageView(ctx);
         layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
@@ -693,7 +723,7 @@ public class MainActivity extends ActionBarActivity {
 
         detailLinearLayout.addView(categoryIcon);
 
-        categoryTitle = new TextView(ctx);
+        categoryTitle = new AutoResizeTextView(ctx);
         categoryTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.08f));
         categoryTitle.setText(nodeConstruct.status);
         categoryTitle.setTextColor(Color.BLACK);
@@ -706,21 +736,15 @@ public class MainActivity extends ActionBarActivity {
         categoryMood.setLayoutParams(layout);
         detailLinearLayout.addView(categoryMood);
 
-        categoryStatus = new TextView(ctx);
+        categoryStatus = new AutoResizeTextView(ctx);
         categoryStatus.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
         categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         categoryStatus.setGravity(Gravity.CENTER);
         detailLinearLayout.addView(categoryStatus);
 
-        if (nodeConstruct.isToday) {
-            categoryMood.setImageResource(R.mipmap.emoticon_sad);
-            categoryStatus.setText("今日發生");
-            categoryStatus.setTextColor(Color.RED);
-        } else {
-            categoryStatus.setText(nodeConstruct.completeDate+"完成");
-            categoryMood.setImageResource(R.mipmap.emoticon_happy);
-            categoryStatus.setTextColor(Color.parseColor("#e8a032"));
-        }
+        categoryStatus.setText(nodeConstruct.completeDate + "完成");
+        categoryMood.setImageResource(R.mipmap.emoticon_happy);
+        categoryStatus.setTextColor(Color.parseColor("#e8a032"));
 
         Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
         amAlpha.setDuration(500);
@@ -768,65 +792,35 @@ public class MainActivity extends ActionBarActivity {
         trafficData = new HashMap<Marker,NodeTraffic>();
         for (int i =0 ;i< nodeTraffic.size();i++){
             Marker marker = null;
-            /**
-            if(nodeTraffic.get(i).isToday) {
-                marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
-            } else {
-                marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
-            }
-             **/
-            //constructData.put(marker,nodeTraffic.get(i));
+            marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
+            trafficData.put(marker, nodeTraffic.get(i));
         }
     }
 
-    private void showCar(final NodeTraffic nodeTraffic){
+
+    private void showCard(final NodeTraffic nodeTraffic){
+        detailLinearLayout.removeAllViews();
         LinearLayout.LayoutParams layout;
 
         ImageView categoryIcon;
-        TextView categoryTitle;
-        ImageView categoryMood;
-        TextView categoryStatus;
+        AutoResizeTextView categoryTitle;
 
         categoryIcon = new ImageView(ctx);
         layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
         categoryIcon.setLayoutParams(layout);
-        if(nodeTraffic.isToday){
-            categoryIcon.setImageResource(R.mipmap.warning);
-        }else{
-            categoryIcon.setImageResource(R.mipmap.marker_warning);
-        }
+        categoryIcon.setImageResource(R.mipmap.constructionsite);
 
         detailLinearLayout.addView(categoryIcon);
 
-        categoryTitle = new TextView(ctx);
+        categoryTitle = new AutoResizeTextView(ctx);
         categoryTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.08f));
         categoryTitle.setText(nodeTraffic.status);
         categoryTitle.setTextColor(Color.BLACK);
         categoryTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         categoryTitle.setGravity(Gravity.CENTER | Gravity.LEFT);
         detailLinearLayout.addView(categoryTitle);
-
-        categoryMood = new ImageView(ctx);
-        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
-        categoryMood.setLayoutParams(layout);
-        detailLinearLayout.addView(categoryMood);
-
-        categoryStatus = new TextView(ctx);
-        categoryStatus.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.1f));
-        categoryStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        categoryStatus.setGravity(Gravity.CENTER);
-        detailLinearLayout.addView(categoryStatus);
-
-        //鍇嘉接棒～
-        //if (nodeTraffic.isToday) {
-
-        //} else {
-
-        //}
 
         Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
         amAlpha.setDuration(500);
