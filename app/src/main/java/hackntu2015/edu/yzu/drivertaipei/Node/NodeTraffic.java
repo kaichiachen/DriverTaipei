@@ -1,5 +1,6 @@
 package hackntu2015.edu.yzu.drivertaipei.Node;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -7,8 +8,9 @@ import org.json.JSONObject;
  */
 public class NodeTraffic {
 
-    public int id;
+    public String id;
     public char region;
+    public String status;
     public String srcDetail;
     public String areaName;
     public String direction;
@@ -19,6 +21,15 @@ public class NodeTraffic {
     public double lon;
 
     public NodeTraffic(JSONObject jo){
+        try {
+            id = jo.getString("id");
+            status = jo.getString("status");
+            lat = jo.getDouble("lat");
+            lon = jo.getDouble("lng");
+            happenTime = jo.getString("dt");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 }
