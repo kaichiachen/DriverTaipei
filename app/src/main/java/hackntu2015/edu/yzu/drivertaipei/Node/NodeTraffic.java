@@ -19,6 +19,7 @@ public class NodeTraffic {
     public String happenTime;
     public double lat;
     public double lon;
+    public boolean isToday;
 
     public NodeTraffic(JSONObject jo){
         try {
@@ -26,7 +27,6 @@ public class NodeTraffic {
             status = jo.getString("status");
             lat = jo.getDouble("lat");
             lon = jo.getDouble("lng");
-            happenTime = jo.getString("dt");
         } catch (JSONException e) {
             e.printStackTrace();
         }

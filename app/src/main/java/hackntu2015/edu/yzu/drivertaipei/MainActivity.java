@@ -132,6 +132,8 @@ public class MainActivity extends ActionBarActivity {
                     showCard(parkingLotData.get(marker));
                 } else if (constructData.get(marker) != null) {
                     showCard(constructData.get(marker));
+                } else if (trafficData.get(marker) != null){
+                    showCard(trafficData.get(marker));
                 }
                 return true;
             }
@@ -279,8 +281,14 @@ public class MainActivity extends ActionBarActivity {
                 for (Marker marker : constructData.keySet()) {
                     marker.setVisible(true);
                 }
+                for (Marker marker : trafficData.keySet()) {
+                    marker.setVisible(true);
+                }
             } else {
                 for (Marker marker : constructData.keySet()) {
+                    marker.setVisible(false);
+                }
+                for (Marker marker : trafficData.keySet()) {
                     marker.setVisible(false);
                 }
             }
@@ -354,8 +362,14 @@ public class MainActivity extends ActionBarActivity {
                     for (Marker marker : constructData.keySet()) {
                         marker.setVisible(true);
                     }
+                    for (Marker marker : trafficData.keySet()) {
+                        marker.setVisible(true);
+                    }
                 } else {
                     for (Marker marker : constructData.keySet()) {
+                        marker.setVisible(false);
+                    }
+                    for (Marker marker : trafficData.keySet()) {
                         marker.setVisible(false);
                     }
                 }
@@ -404,6 +418,11 @@ public class MainActivity extends ActionBarActivity {
             }
 
             @Override
+            public void onTrafficDataDownloadComplete() {
+
+            }
+
+            @Override
             public void onDataDownloadFailed(ErrorCode err, DataController.DataType dataType) {
 
             }
@@ -426,6 +445,11 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList) {
                 //setCarFlowInfo(carFlowList);
+            }
+
+            @Override
+            public void onTrafficDataUpdate(List<NodeTraffic> trafficList) {
+                setTrafficInfo(trafficList);
             }
         });
         DataManager.getInstance().updateData();
@@ -718,15 +742,9 @@ public class MainActivity extends ActionBarActivity {
         categoryStatus.setGravity(Gravity.CENTER);
         detailLinearLayout.addView(categoryStatus);
 
-        if (nodeConstruct.isToday) {
-            categoryMood.setImageResource(R.mipmap.emoticon_sad);
-            categoryStatus.setText("今日發生");
-            categoryStatus.setTextColor(Color.RED);
-        } else {
-            categoryStatus.setText(nodeConstruct.completeDate+"完成");
-            categoryMood.setImageResource(R.mipmap.emoticon_happy);
-            categoryStatus.setTextColor(Color.parseColor("#e8a032"));
-        }
+        categoryStatus.setText(nodeConstruct.completeDate+"完成");
+        categoryMood.setImageResource(R.mipmap.emoticon_happy);
+        categoryStatus.setTextColor(Color.parseColor("#e8a032"));
 
         Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
         amAlpha.setDuration(500);
@@ -774,23 +792,54 @@ public class MainActivity extends ActionBarActivity {
         trafficData = new HashMap<Marker,NodeTraffic>();
         for (int i =0 ;i< nodeTraffic.size();i++){
             Marker marker = null;
-            /**
-            if(nodeTraffic.get(i).isToday) {
-                marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
-            } else {
-                marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
-            }
-             **/
-            //constructData.put(marker,nodeTraffic.get(i));
+            marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(nodeTraffic.get(i).lat, nodeTraffic.get(i).lon))
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_warning)));
+            trafficData.put(marker, nodeTraffic.get(i));
         }
     }
 
-    private void showCar(final NodeTraffic nodeTraffic){
-        
+    private void showCard(final NodeTraffic nodeTraffic){
+        detailLinearLayout.removeAllViews();
+        LinearLayout.LayoutParams layout;
+
+        ImageView categoryIcon;
+        AutoResizeTextView categoryTitle;
+
+        categoryIcon = new ImageView(ctx);
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.12f);
+        categoryIcon.setLayoutParams(layout);
+        categoryIcon.setImageResource(R.mipmap.constructionsite);
+
+        detailLinearLayout.addView(categoryIcon);
+
+        categoryTitle = new AutoResizeTextView(ctx);
+        categoryTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 0.08f));
+        categoryTitle.setText(nodeTraffic.status);
+        categoryTitle.setTextColor(Color.BLACK);
+        categoryTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        categoryTitle.setGravity(Gravity.CENTER | Gravity.LEFT);
+        detailLinearLayout.addView(categoryTitle);
+
+        Animation amAlpha = new AlphaAnimation(0.0f, 1.0f);
+        amAlpha.setDuration(500);
+        amAlpha.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                detailBar.setVisibility(View.VISIBLE);
+                categoryNavigation.setVisibility(View.INVISIBLE);
+                categoryPayMent.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+        });
+        detailBar.startAnimation(amAlpha);
     }
 
     private void setUpMap(Location location) {

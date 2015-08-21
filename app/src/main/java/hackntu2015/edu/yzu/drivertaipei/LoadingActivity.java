@@ -56,7 +56,7 @@ public class LoadingActivity extends Activity {
             public void run() {
                 time++;
                 Log.d(TAG,"timer: "+time);
-                if (time > 2){// && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded) {
+                if (time > 2 && isGasDownloaded && isCarFLowDownloaded && isConstructDownloaded && isTrafficDownloaded) {
                     handler.removeCallbacks(this);
                     Intent i = new Intent(LoadingActivity.this, MainActivity.class);
                     ctx.startActivity(i);
@@ -92,35 +92,35 @@ public class LoadingActivity extends Activity {
             public void onParkingLotDataDownloadComplete() {
                 loadingCount++;
                 isParkingLotDownloaded = true;
-                Log.i(TAG,"ParkingLog Data Download Complete");
+                Log.i(TAG, "ParkingLog Data Download Complete");
             }
 
             @Override
             public void onGasDataDownloadComplete() {
                 loadingCount++;
                 isGasDownloaded = true;
-                Log.i(TAG,"Gas Data Download Complete");
+                Log.i(TAG, "Gas Data Download Complete");
             }
 
             @Override
             public void onConstructDataDownloadComplete() {
                 loadingCount++;
                 isConstructDownloaded = true;
-                Log.i(TAG,"Construct Data Download Complete");
+                Log.i(TAG, "Construct Data Download Complete");
             }
 
             @Override
             public void onCarFlowDataDownloadComplete() {
                 loadingCount++;
                 isCarFLowDownloaded = true;
-                Log.i(TAG,"CarFlow Data Download Complete");
+                Log.i(TAG, "CarFlow Data Download Complete");
             }
 
             @Override
             public void onTrafficDataDownloadComplete() {
                 loadingCount++;
                 isTrafficDownloaded = true;
-                Log.i(TAG,"Traffic Data Download Complete");
+                Log.i(TAG, "Traffic Data Download Complete");
             }
 
             @Override
@@ -168,6 +168,7 @@ public class LoadingActivity extends Activity {
         DataManager.getInstance().downloadCarFlowData();
         DataManager.getInstance().downloadGasData();
         DataManager.getInstance().downloadConstructData();
+        DataManager.getInstance().downloadTrafficData();
     }
 
     @Override

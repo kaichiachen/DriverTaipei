@@ -36,4 +36,5 @@ public class DataManager {
     public void downloadConstructData(){ mCentralController.downloadConstructData(); }
     public void downloadGasData(){ mCentralController.downloadGasData(); }
     public void downloadCarFlowData(){ mCentralController.downloadCarFlowData(); }
+    public void downloadTrafficData(){ mCentralController.downloadTrafficData(); }
 }

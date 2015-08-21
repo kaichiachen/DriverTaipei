@@ -40,10 +40,10 @@ public class RequestClient {
 
     private static AsyncHttpClient getClient() {
         if (Looper.myLooper() == null) {
-            sclient.setTimeout(30000);
+            sclient.setTimeout(300000);
             return sclient;
         }
-        aclient.setTimeout(30000);
+        aclient.setTimeout(300000);
         return aclient;
     }
 }

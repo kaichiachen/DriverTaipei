@@ -126,16 +126,16 @@ public class DataController {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
-                Log.e(TAG, "CarFlow Data request fail: " + statusCode);
+                Log.e(TAG, "Traffic Data request fail: " + statusCode);
                 //notifyFailure(ErrorCode.ERR_WRONGURL);
-                mListener.onCarFlowDataDownloadComplete();
+                mListener.onTrafficDataDownloadComplete();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.i(TAG, "Data request success: " + response.toString());
+                Log.i(TAG, "Traffic request success: " + response.toString());
                 setTrafficsData(response);
-                mListener.onCarFlowDataDownloadComplete();
+                mListener.onTrafficDataDownloadComplete();
             }
         });
     }
