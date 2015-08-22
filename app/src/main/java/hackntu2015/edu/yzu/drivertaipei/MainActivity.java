@@ -136,7 +136,7 @@ public class MainActivity extends FragmentActivity {
                     Toast popup = Toast.makeText(MainActivity.this, "沒有可以用的設定", Toast.LENGTH_SHORT);
                     popup.show();
                 }else if (position == 1){
-                    Toast popup = Toast.makeText(MainActivity.this, "幫手準備中...", Toast.LENGTH_SHORT);
+                    Toast popup = Toast.makeText(MainActivity.this, "我們正在準備中...", Toast.LENGTH_SHORT);
                     popup.show();
                 }else if(position == 2){
                     Intent intent = new Intent(MainActivity.this,about.class);
