@@ -152,7 +152,10 @@ public class MainActivity extends FragmentActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                if(position == 2){
+                    Intent intent = new Intent(MainActivity.this,about.class);
+                    startActivity(intent);
+                }
             }
         });
 
