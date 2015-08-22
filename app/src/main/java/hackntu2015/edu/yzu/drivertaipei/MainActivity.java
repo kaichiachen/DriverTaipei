@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -131,7 +132,16 @@ public class MainActivity extends FragmentActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                if(position == 0){
+                    Toast popup = Toast.makeText(MainActivity.this, "沒有可以用的設定", Toast.LENGTH_SHORT);
+                    popup.show();
+                }else if (position == 1){
+                    Toast popup = Toast.makeText(MainActivity.this, "幫手準備中...", Toast.LENGTH_SHORT);
+                    popup.show();
+                }else if(position == 2){
+                    Intent intent = new Intent(MainActivity.this,about.class);
+                    startActivity(intent);
+                }
             }
         });
 
