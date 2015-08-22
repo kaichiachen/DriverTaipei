@@ -262,23 +262,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LocationListener locationListener = new LocationListener(){
-            @Override
-            public void onLocationChanged(Location location) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
-                //locationManager.removeUpdates(this);
-            }
-
-            @Override
-            public void onStatusChanged(String provider,int status,Bundle extras){}
-
-            @Override
-            public void onProviderEnabled(String provider){}
-            @Override
-            public void onProviderDisabled(String provider){}
-        };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     private void updateMarker(LatLng cameraPosition) {
