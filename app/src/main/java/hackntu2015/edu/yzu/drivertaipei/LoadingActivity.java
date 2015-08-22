@@ -24,6 +24,7 @@ import hackntu2015.edu.yzu.drivertaipei.controller.DataController;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataListener;
 import hackntu2015.edu.yzu.drivertaipei.controller.DataManager;
 import hackntu2015.edu.yzu.drivertaipei.utils.ErrorCode;
+import hackntu2015.edu.yzu.drivertaipei.utils.Utils;
 
 /**
  * Created by andy on 8/18/15.
@@ -48,9 +49,9 @@ public class LoadingActivity extends Activity {
         setContentView(R.layout.loading);
         time = 0;
         ctx = this;
+        final Handler handler = new Handler();
         loadingBar = (ProgressBar)findViewById(R.id.loading_progress);
         loadingBar.setVisibility(View.INVISIBLE);
-        final Handler handler = new Handler();
 
         Runnable loading = new Runnable(){
 
@@ -87,7 +88,26 @@ public class LoadingActivity extends Activity {
                 handler.postDelayed(this,1000);
             }
         };
-        handler.post(loading);
+
+        if(!Utils.isGPSEnabled(this)){
+            AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
+            alert.setMessage("需要開啟GPS").setCancelable(false).setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent gpsOptionsIntent = new Intent(
+                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(gpsOptionsIntent);
+                    finish();
+                }
+            });
+            alert.show();
+        } else{
+            handler.post(loading);
+            DataManager.getInstance().downloadParkingLotData();
+            DataManager.getInstance().downloadGasData();
+            DataManager.getInstance().downloadConstructData();
+            DataManager.getInstance().downloadTrafficData();
+        }
 
 
         DataManager.getInstance().setListener(new DataListener() {
@@ -169,10 +189,6 @@ public class LoadingActivity extends Activity {
 
             }
         });
-        DataManager.getInstance().downloadParkingLotData();
-        DataManager.getInstance().downloadGasData();
-        DataManager.getInstance().downloadConstructData();
-        DataManager.getInstance().downloadTrafficData();
     }
 
     @Override

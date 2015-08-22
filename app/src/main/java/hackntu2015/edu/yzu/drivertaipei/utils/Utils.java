@@ -1,5 +1,8 @@
 package hackntu2015.edu.yzu.drivertaipei.utils;
 
+import android.content.Context;
+import android.location.LocationManager;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -24,4 +27,8 @@ public class Utils {
         }
     }
 
+    public static boolean isGPSEnabled(Context context){
+        LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
 }

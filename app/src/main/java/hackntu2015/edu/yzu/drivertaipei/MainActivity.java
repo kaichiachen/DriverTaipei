@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -83,7 +82,7 @@ public class MainActivity extends FragmentActivity {
     private HashMap<Marker, NodeTraffic> trafficData;
 
     private Handler uiHandler = new Handler();
-    private Marker mSelectMarker;
+    private Marker mSelectMarker = null;
 
     private boolean insideScale = true;
     private boolean gasIsCheck = true;
@@ -149,19 +148,17 @@ public class MainActivity extends FragmentActivity {
         }
         ListView listView = (ListView) mMenu.findViewById(R.id.listView);
         listView.setAdapter(new MenuAdapter(this));
-        listView.setDivider(null);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
-                    Toast popup = Toast.makeText(MainActivity.this, "沒有可以用的設定", Toast.LENGTH_SHORT);
-                    popup.show();
+                    Intent intent = new Intent(MainActivity.this,SettingActivity.class);
+                    startActivity(intent);
                 }else if (position == 1){
                     Toast popup = Toast.makeText(MainActivity.this, "我們正在準備中...", Toast.LENGTH_SHORT);
                     popup.show();
                 }else if(position == 2){
-
-                    Intent intent = new Intent(MainActivity.this,about.class);
+                    Intent intent = new Intent(MainActivity.this,AboutActivity.class);
                     startActivity(intent);
                 }
             }
@@ -199,7 +196,10 @@ public class MainActivity extends FragmentActivity {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                mSelectMarker = marker;
+                if(mSelectMarker != null){
+                    mSelectMarker.remove();
+                }
+                mSelectMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.selectioncircle)).position(marker.getPosition()));
                 if (gasData.get(marker) != null) {
                     showCard(gasData.get(marker));
                 } else if (parkingLotData.get(marker) != null) {
@@ -234,8 +234,6 @@ public class MainActivity extends FragmentActivity {
                     removeCard();
                 if (filterLayout.getVisibility() == View.VISIBLE) {
                     filterLayout.setVisibility(View.INVISIBLE);
-                } else {
-                    filterLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -688,7 +686,7 @@ public class MainActivity extends FragmentActivity {
                 payDialog.setView(dialoglayout);
                 final AlertDialog dialog = payDialog.show();
                 dialog.getWindow().setLayout(1000,1200);
-                TextView content = (TextView)dialoglayout.findViewById(R.id.dialog_content);
+                AutoResizeTextView content = (AutoResizeTextView)dialoglayout.findViewById(R.id.dialog_content);
                 content.setText(nodeParkingLot.payDes);
                 Button closebtn = (Button)dialoglayout.findViewById(R.id.dialog_close);
                 closebtn.setOnClickListener(new View.OnClickListener() {

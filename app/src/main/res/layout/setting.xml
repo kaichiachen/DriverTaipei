@@ -1,0 +1,36 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#BBB">
+    <RelativeLayout
+        android:background="@color/action_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="62dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/bar_layout">
+        <ImageButton
+            android:id="@+id/btn_menu"
+            android:background="@mipmap/menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/setting_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+    </ListView>
+
+</RelativeLayout>

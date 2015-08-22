@@ -37,7 +37,7 @@ public class MenuAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = myInflater.inflate(R.layout.listview, null);
+        convertView = myInflater.inflate(R.layout.menu_list, null);
         ImageView icon = (ImageView)convertView.findViewById(R.id.menu_icon);
         TextView title = (TextView)convertView.findViewById(R.id.menu_text);
         icon.setImageResource(icon_res[position]);

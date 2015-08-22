@@ -36,10 +36,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".about"
-            android:label="@string/title_activity_about"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about">
         </activity>
+        <activity android:name=".SettingActivity"></activity>
     </application>
 
 </manifest>
