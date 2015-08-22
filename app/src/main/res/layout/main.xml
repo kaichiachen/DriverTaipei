@@ -4,7 +4,7 @@
     <RelativeLayout
         android:background="@color/action_bar"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="62dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
