@@ -69,7 +69,7 @@ public class LoadingActivity extends Activity {
                 } else if(time > 30){
                     handler.removeCallbacks(this);
                     AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
-                    alert.setMessage("網路連線不良").setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                    alert.setMessage(R.string.network_error).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
@@ -131,7 +131,7 @@ public class LoadingActivity extends Activity {
             @Override
             public void onDataDownloadFailed(ErrorCode err, DataController.DataType dataType) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
-                alert.setMessage("資料連接有誤").setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                alert.setMessage(R.string.data_error).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
