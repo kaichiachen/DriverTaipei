@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.navdrawer.SimpleSideDrawer;
 
@@ -51,19 +50,16 @@ public class SettingActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch(position){
                     case 0:
-
-                        break;
-                    case 1:
                         Intent gpsOptionsIntent = new Intent(
                                 android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivity(gpsOptionsIntent);
                         break;
-                    case 2:
+                    case 1:
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("market://details?id=hackntu2015.edu.yzu.drivertaipei"));
                         startActivity(intent);
                         break;
-                    case 3:
+                    case 2:
                         AlertDialog.Builder payDialog = new AlertDialog.Builder(ctx);
 
                         LayoutInflater inflater = getLayoutInflater();
@@ -107,14 +103,21 @@ public class SettingActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    mMenu.toggleLeftDrawer();
-                } else if (position == 1) {
-                    Toast popup = Toast.makeText(SettingActivity.this, "我們正在準備中...", Toast.LENGTH_SHORT);
-                    popup.show();
-                } else if (position == 2) {
-                    Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
-                    startActivity(intent);
+                switch (position){
+                    case 0:
+                        finish();
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+                    case 1:
+                        mMenu.toggleLeftDrawer();
+                        break;
+                    case 2:
+                        startActivity(new Intent(SettingActivity.this, AboutActivity.class));
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        finish();
+                        break;
+                    default:
+                        break;
                 }
             }
         });
@@ -124,14 +127,14 @@ public class SettingActivity extends Activity {
     private class SettingAdapter extends BaseAdapter {
 
         private LayoutInflater myInflater;
-        private String[] setting_title = {"設定語言","改善所在位置準確度","傳送意見","條款及隱私權"};
+        private String[] setting_title = {"改善所在位置準確度","傳送意見","條款及隱私權"};
 
         public SettingAdapter(Context c) {
             myInflater = LayoutInflater.from(c);
         }
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override

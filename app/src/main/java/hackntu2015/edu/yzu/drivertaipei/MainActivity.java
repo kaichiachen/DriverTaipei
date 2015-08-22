@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -151,15 +150,20 @@ public class MainActivity extends FragmentActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0){
-                    Intent intent = new Intent(MainActivity.this,SettingActivity.class);
-                    startActivity(intent);
-                }else if (position == 1){
-                    Toast popup = Toast.makeText(MainActivity.this, "我們正在準備中...", Toast.LENGTH_SHORT);
-                    popup.show();
-                }else if(position == 2){
-                    Intent intent = new Intent(MainActivity.this,AboutActivity.class);
-                    startActivity(intent);
+                switch (position) {
+                    case 0:
+                        mMenu.toggleLeftDrawer();
+                        break;
+                    case 1:
+                        startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+                    case 2:
+                        startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+                    default:
+                        break;
                 }
             }
         });
@@ -193,6 +197,8 @@ public class MainActivity extends FragmentActivity {
         trafficData = new HashMap<Marker, NodeTraffic>();
 
         updateData();
+
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -221,7 +227,7 @@ public class MainActivity extends FragmentActivity {
                 if (cameraPosition.zoom < 16.5) {
                     insideScale = true;
                 } else {
-                    insideScale = false;
+                    insideScale = true;
                 }
                 updateMarker(cameraPosition.target);
             }
@@ -258,9 +264,9 @@ public class MainActivity extends FragmentActivity {
         super.onResume();
         LocationListener locationListener = new LocationListener(){
             @Override
-            public void onLocationChanged(Location location){
+            public void onLocationChanged(Location location) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
-                locationManager.removeUpdates(this);
+                //locationManager.removeUpdates(this);
             }
 
             @Override

@@ -14,8 +14,8 @@ import android.widget.TextView;
 public class MenuAdapter extends BaseAdapter {
 
     private LayoutInflater myInflater;
-    private int[] icon_res = {R.mipmap.settings, R.mipmap.help_circle, R.mipmap.emoticon_cool};
-    private String[] menu_title = {"設定","幫助","關於我們"};
+    private int[] icon_res = {R.mipmap.home,R.mipmap.settings, R.mipmap.emoticon_cool};
+    private String[] menu_title = {"主畫面","設定","關於我們"};
 
     public MenuAdapter(Context c) {
         myInflater = LayoutInflater.from(c);

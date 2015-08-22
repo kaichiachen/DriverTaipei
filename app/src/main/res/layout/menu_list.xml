@@ -18,5 +18,7 @@
         android:gravity="center|left"
         android:id="@+id/menu_text"
         android:layout_weight="1"
+        android:text="test"
+        android:textSize="22sp"
         android:layout_gravity="right" />
 </LinearLayout>
