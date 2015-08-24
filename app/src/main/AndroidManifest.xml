@@ -27,8 +27,8 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoadingActivity" >
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LoadingActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,9 +37,10 @@
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about">
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SettingActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

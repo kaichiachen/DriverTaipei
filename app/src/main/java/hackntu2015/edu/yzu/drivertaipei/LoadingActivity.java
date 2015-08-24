@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -89,6 +91,9 @@ public class LoadingActivity extends Activity {
             }
         };
 
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+
         if(!Utils.isGPSEnabled(this)){
             AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
             alert.setMessage("需要開啟GPS").setCancelable(false).setPositiveButton("確定", new DialogInterface.OnClickListener() {
@@ -101,7 +106,19 @@ public class LoadingActivity extends Activity {
                 }
             });
             alert.show();
-        } else{
+        } else if(!mNetworkInfo.isConnected()) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
+            alert.setMessage("網路連線有問題").setCancelable(false).setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent gpsOptionsIntent = new Intent(
+                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(gpsOptionsIntent);
+                    finish();
+                }
+            });
+            alert.show();
+        }else{
             handler.post(loading);
             DataManager.getInstance().downloadParkingLotData();
             DataManager.getInstance().downloadGasData();

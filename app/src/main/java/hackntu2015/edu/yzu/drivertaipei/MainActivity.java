@@ -487,6 +487,7 @@ public class MainActivity extends FragmentActivity {
             categoryNavigation.startAnimation(amAlpha);
         if(categoryPayMent.getVisibility() == View.VISIBLE)
             categoryPayMent.startAnimation(amAlpha);
+        mSelectMarker.remove();
     }
 
     private void setGasInfo(NodeGas nodeGase){
@@ -670,11 +671,12 @@ public class MainActivity extends FragmentActivity {
             public void onClick(View v) {
                 AlertDialog.Builder payDialog = new AlertDialog.Builder(ctx);
 
+
                 LayoutInflater inflater = getLayoutInflater();
                 View dialoglayout = inflater.inflate(R.layout.custom_dialog, null);
                 payDialog.setView(dialoglayout);
                 final AlertDialog dialog = payDialog.show();
-                dialog.getWindow().setLayout(1000,1200);
+                dialog.getWindow().setLayout(Utils.getWindowWidth(getWindowManager()) * 4 / 5,Utils.getWindowHeight(getWindowManager()) * 4 / 5);
                 AutoResizeTextView content = (AutoResizeTextView)dialoglayout.findViewById(R.id.dialog_content);
                 content.setText(nodeParkingLot.payDes);
                 Button closebtn = (Button)dialoglayout.findViewById(R.id.dialog_close);

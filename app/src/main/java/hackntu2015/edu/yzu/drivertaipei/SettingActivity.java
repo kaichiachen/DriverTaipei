@@ -66,7 +66,7 @@ public class SettingActivity extends Activity {
                         View dialoglayout = inflater.inflate(R.layout.custom_dialog, null);
                         payDialog.setView(dialoglayout);
                         final AlertDialog dialog = payDialog.show();
-                        dialog.getWindow().setLayout(1000,1200);
+                        dialog.getWindow().setLayout(Utils.getWindowWidth(getWindowManager()) * 4 / 5,Utils.getWindowHeight(getWindowManager()) * 4 / 5);
                         AutoResizeTextView content = (AutoResizeTextView)dialoglayout.findViewById(R.id.dialog_content);
                         content.setText(claim);
                         Button closebtn = (Button)dialoglayout.findViewById(R.id.dialog_close);

@@ -2,6 +2,8 @@ package hackntu2015.edu.yzu.drivertaipei.utils;
 
 import android.content.Context;
 import android.location.LocationManager;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,5 +32,17 @@ public class Utils {
     public static boolean isGPSEnabled(Context context){
         LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    public static int getWindowHeight(WindowManager manager){
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        return metrics.heightPixels;
+    }
+
+    public static int getWindowWidth(WindowManager manager){
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        return metrics.widthPixels;
     }
 }
