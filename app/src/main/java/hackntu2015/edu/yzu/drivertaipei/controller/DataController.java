@@ -102,25 +102,6 @@ public class DataController {
         });
     }
 
-    void downloadCarFlowData(){
-        RequestClient.requestCarFlow(new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers,
-                                  String responseString, Throwable throwable) {
-                Log.e(TAG, "CarFlow Data request fail: " + statusCode);
-                //notifyFailure(ErrorCode.ERR_WRONGURL);
-                mListener.onCarFlowDataDownloadComplete();
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.i(TAG, "Data request success: " + response.toString());
-                setCarFlow(response);
-                mListener.onCarFlowDataDownloadComplete();
-            }
-        });
-    }
-
     void downloadTrafficData(){
         RequestClient.requestTraffic(new JsonHttpResponseHandler() {
             @Override
@@ -144,7 +125,22 @@ public class DataController {
         mListener.onGasDataUpdate(getGasData());
         mListener.onParkingLotDataUpdate(getParkingLotData());
         mListener.onConstructDataUpdate(getConstructData());
-        mListener.onCarFlowDataUpdate(getCarFlowData());
+        mListener.onTrafficDataUpdate(getTrafficData());
+    }
+
+    void updateGasData(){
+        mListener.onGasDataUpdate(getGasData());
+    }
+
+    void updateParkingLotData(){
+        mListener.onParkingLotDataUpdate(getParkingLotData());
+    }
+
+    void updateConstructData(){
+        mListener.onConstructDataUpdate(getConstructData());
+    }
+
+    void updateTrafficData(){
         mListener.onTrafficDataUpdate(getTrafficData());
     }
 

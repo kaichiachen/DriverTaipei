@@ -32,9 +32,24 @@ public class DataManager {
         mCentralController.updateData();
     }
 
+    public void updateGasData(){
+        mCentralController.updateGasData();
+    }
+
+    public void updateParkingLotData(){
+        mCentralController.updateParkingLotData();
+    }
+
+    public void updateConstructData(){
+        mCentralController.updateConstructData();
+    }
+
+    public void updateTrafficData(){
+        mCentralController.updateTrafficData();
+    }
+
     public void downloadParkingLotData(){ mCentralController.downloadParkingLotData(); }
     public void downloadConstructData(){ mCentralController.downloadConstructData(); }
     public void downloadGasData(){ mCentralController.downloadGasData(); }
-    public void downloadCarFlowData(){ mCentralController.downloadCarFlowData(); }
     public void downloadTrafficData(){ mCentralController.downloadTrafficData(); }
 }

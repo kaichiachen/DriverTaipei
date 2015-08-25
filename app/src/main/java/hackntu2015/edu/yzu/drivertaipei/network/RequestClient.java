@@ -13,7 +13,6 @@ public class RequestClient {
     private static final String PARKINGLOT_URL = "http://drivertaipei.cloudapp.net/api/parking";
     private static final String CONSTRUCT_URL = "http://drivertaipei.cloudapp.net/api/construct";
     private static final String GAS_URL = "http://drivertaipei.cloudapp.net/api/gas";
-    private static final String CARFLOW_URL = "http://drivertaipei.cloudapp.net/api/vd";
     private static final String TRAFFIC_URL = "http://drivertaipei.cloudapp.net/api/pbs";
     private static AsyncHttpClient aclient = new AsyncHttpClient(true, 80, 443);
     private static AsyncHttpClient sclient = new SyncHttpClient(true, 80, 443);
@@ -28,10 +27,6 @@ public class RequestClient {
 
     public static void requestGas(AsyncHttpResponseHandler responseHandler){
         getClient().get(GAS_URL, responseHandler);
-    }
-
-    public static void requestCarFlow(AsyncHttpResponseHandler responseHandler){
-        getClient().get(CARFLOW_URL, responseHandler);
     }
 
     public static void requestTraffic(AsyncHttpResponseHandler responseHandler){

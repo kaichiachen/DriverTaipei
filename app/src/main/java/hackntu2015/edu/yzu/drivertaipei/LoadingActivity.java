@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-import hackntu2015.edu.yzu.drivertaipei.Node.NodeCarFlow;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeConstruct;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeGas;
 import hackntu2015.edu.yzu.drivertaipei.Node.NodeParkingLot;
@@ -151,13 +150,6 @@ public class LoadingActivity extends Activity {
             }
 
             @Override
-            public void onCarFlowDataDownloadComplete() {
-                loadingCount++;
-                isCarFLowDownloaded = true;
-                Log.i(TAG, "CarFlow Data Download Complete");
-            }
-
-            @Override
             public void onTrafficDataDownloadComplete() {
                 loadingCount++;
                 isTrafficDownloaded = true;
@@ -193,11 +185,6 @@ public class LoadingActivity extends Activity {
 
             @Override
             public void onConstructDataUpdate(List<NodeConstruct> constructList) {
-
-            }
-
-            @Override
-            public void onCarFlowDataUpdate(List<NodeCarFlow> carFlowList) {
 
             }
 

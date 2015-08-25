@@ -51,10 +51,9 @@
         </LinearLayout>
     </LinearLayout>
     <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@mipmap/actionbarshadow" android:layout_alignParentTop="true" />
-    <RelativeLayout android:id="@+id/detailBar" android:background="@drawable/card_background" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="60.0dip" android:layout_marginLeft="15.0dip" android:layout_marginRight="30.0dip" android:layout_marginBottom="30.0dip" android:layout_alignParentBottom="true" android:layout_alignParentStart="true">
-        <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@+id/detailLinearLayout" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="15.0dip" android:layout_marginBottom="10.0dip" />
-    </RelativeLayout>
-    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentBottom="true" android:layout_marginStart="425.0dip" android:layout_alignParentStart="true" />
+
+    <LinearLayout android:gravity="center" android:background="@drawable/card_background" android:orientation="horizontal" android:id="@+id/detailLinearLayout" android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginLeft="10dp" android:layout_marginRight="15dp" android:layout_marginBottom="30dp" android:layout_alignParentBottom="true" />
+
     <Button android:gravity="right" android:id="@+id/navigationButton" android:background="@mipmap/navigationbutton" android:visibility="invisible" android:layout_width="80.0dip" android:layout_height="80.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="20.0dip" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
     <Button android:gravity="right" android:id="@+id/parkingMoneyButton" android:background="@mipmap/parkingpayment" android:visibility="invisible" android:layout_width="50.0dip" android:layout_height="50.0dip" android:layout_marginRight="25.0dip" android:layout_marginBottom="100.0dip" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
 </RelativeLayout>
