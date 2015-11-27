@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>DriverTaipei_iOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>開車吧，台北Tests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>A118D2761BE74B9100C423FA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A19213981BD94C2400269078</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A1A95F3C1BE72ECE006842FD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A1A95F4A1BE730FC006842FD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

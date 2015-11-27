@@ -1,0 +1,677 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A192139D1BD94C2400269078 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192139C1BD94C2400269078 /* AppDelegate.swift */; };
+		A192139F1BD94C2400269078 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192139E1BD94C2400269078 /* MainViewController.swift */; };
+		A19213A21BD94C2400269078 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19213A01BD94C2400269078 /* Main.storyboard */; };
+		A19213A51BD94C2400269078 /* DriverTaipei_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A19213A31BD94C2400269078 /* DriverTaipei_iOS.xcdatamodeld */; };
+		A19213BC1BD9FFAD00269078 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213BB1BD9FFAD00269078 /* LaunchViewController.swift */; };
+		A19213BF1BDA00B000269078 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213BE1BDA00B000269078 /* DataController.swift */; };
+		A19213C21BDA00E900269078 /* TrafficDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213C11BDA00E900269078 /* TrafficDataSource.swift */; };
+		A19213C61BDA014400269078 /* GasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213C41BDA014400269078 /* GasRequest.swift */; };
+		A19213C71BDA014400269078 /* ServerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213C51BDA014400269078 /* ServerResponse.swift */; };
+		A19213CE1BDA021100269078 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213C91BDA021100269078 /* Constant.swift */; };
+		A19213CF1BDA021100269078 /* MyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213CA1BDA021100269078 /* MyExtension.swift */; };
+		A19213D01BDA021100269078 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A19213CC1BDA021100269078 /* Reachability.m */; };
+		A19213D11BDA021100269078 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213CD1BDA021100269078 /* Utils.swift */; };
+		A19213D41BDA043000269078 /* DataNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213D31BDA043000269078 /* DataNode.swift */; };
+		A19213D61BDA051900269078 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213D51BDA051800269078 /* DataStore.swift */; };
+		A19213D81BDA0A0F00269078 /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213D71BDA0A0F00269078 /* BasicViewController.swift */; };
+		A19213DC1BDA4F3000269078 /* ParkingLotRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213DB1BDA4F3000269078 /* ParkingLotRequest.swift */; };
+		A19213DE1BDA4F5900269078 /* TrafficRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213DD1BDA4F5900269078 /* TrafficRequest.swift */; };
+		A19213E01BDA4F7600269078 /* ConstructRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19213DF1BDA4F7600269078 /* ConstructRequest.swift */; };
+		A19213E21BDA5B5100269078 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19213E11BDA5B5100269078 /* MapKit.framework */; };
+		A19214071BDA96EC00269078 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19214061BDA96EC00269078 /* CoreLocation.framework */; };
+		A19214091BDAA78C00269078 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19214081BDAA78C00269078 /* CustomAnnotation.swift */; };
+		A192140B1BDBDF2F00269078 /* GasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192140A1BDBDF2F00269078 /* GasView.swift */; };
+		A192140D1BDBE0D900269078 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192140C1BDBE0D900269078 /* CardView.swift */; };
+		A19214101BDCE59800269078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A192140F1BDCE59800269078 /* Assets.xcassets */; };
+		A19214121BDDD1F100269078 /* ParkingLotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19214111BDDD1F100269078 /* ParkingLotView.swift */; };
+		A19214141BDDF87500269078 /* paymentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19214131BDDF87500269078 /* paymentButton.swift */; };
+		A19214161BDE0A5A00269078 /* ConstructView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19214151BDE0A5A00269078 /* ConstructView.swift */; };
+		A19214181BDE35EA00269078 /* TrafficView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19214171BDE35EA00269078 /* TrafficView.swift */; };
+		A192141A1BDE94C700269078 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19214191BDE94C700269078 /* MenuViewController.swift */; };
+		A192141E1BDF223300269078 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192141D1BDF223300269078 /* SettingViewController.swift */; };
+		A19214201BDF224D00269078 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192141F1BDF224D00269078 /* AboutViewController.swift */; };
+		A19214261BE0B7C000269078 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19214251BE0B7C000269078 /* FilterViewController.swift */; };
+		A1A95F4E1BE730FD006842FD /* DriverTaipei_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A95F4D1BE730FD006842FD /* DriverTaipei_Tests.swift */; };
+		C579059B6146587BF6063EC4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D030E1A93EEFB9A340518305 /* Pods.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A1A95F501BE730FD006842FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A19213911BD94C2400269078 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A19213981BD94C2400269078;
+			remoteInfo = DriverTaipei_iOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		417D4E642ECD4E95F3384F9B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		8437A232A9DE1575D40BBE76 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A19213991BD94C2400269078 /* DriverTaipei_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriverTaipei_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A192139C1BD94C2400269078 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A192139E1BD94C2400269078 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		A19213A11BD94C2400269078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A19213A41BD94C2400269078 /* DriverTaipei_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DriverTaipei_iOS.xcdatamodel; sourceTree = "<group>"; };
+		A19213AB1BD94C2500269078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A19213B71BD95C6100269078 /* DriverTaipei_iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DriverTaipei_iOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		A19213BB1BD9FFAD00269078 /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		A19213BE1BDA00B000269078 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		A19213C11BDA00E900269078 /* TrafficDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrafficDataSource.swift; sourceTree = "<group>"; };
+		A19213C41BDA014400269078 /* GasRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasRequest.swift; sourceTree = "<group>"; };
+		A19213C51BDA014400269078 /* ServerResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerResponse.swift; sourceTree = "<group>"; };
+		A19213C91BDA021100269078 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		A19213CA1BDA021100269078 /* MyExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyExtension.swift; sourceTree = "<group>"; };
+		A19213CB1BDA021100269078 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		A19213CC1BDA021100269078 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		A19213CD1BDA021100269078 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		A19213D31BDA043000269078 /* DataNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataNode.swift; sourceTree = "<group>"; };
+		A19213D51BDA051800269078 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		A19213D71BDA0A0F00269078 /* BasicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicViewController.swift; sourceTree = "<group>"; };
+		A19213DB1BDA4F3000269078 /* ParkingLotRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingLotRequest.swift; sourceTree = "<group>"; };
+		A19213DD1BDA4F5900269078 /* TrafficRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrafficRequest.swift; sourceTree = "<group>"; };
+		A19213DF1BDA4F7600269078 /* ConstructRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstructRequest.swift; sourceTree = "<group>"; };
+		A19213E11BDA5B5100269078 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A19214061BDA96EC00269078 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A19214081BDAA78C00269078 /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		A192140A1BDBDF2F00269078 /* GasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasView.swift; sourceTree = "<group>"; };
+		A192140C1BDBE0D900269078 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		A192140F1BDCE59800269078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A19214111BDDD1F100269078 /* ParkingLotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingLotView.swift; sourceTree = "<group>"; };
+		A19214131BDDF87500269078 /* paymentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paymentButton.swift; sourceTree = "<group>"; };
+		A19214151BDE0A5A00269078 /* ConstructView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstructView.swift; sourceTree = "<group>"; };
+		A19214171BDE35EA00269078 /* TrafficView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrafficView.swift; sourceTree = "<group>"; };
+		A19214191BDE94C700269078 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		A192141D1BDF223300269078 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		A192141F1BDF224D00269078 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		A19214251BE0B7C000269078 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		A1A95F321BE3D475006842FD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		A1A95F4B1BE730FC006842FD /* DriverTaipei_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DriverTaipei_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1A95F4D1BE730FD006842FD /* DriverTaipei_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverTaipei_Tests.swift; sourceTree = "<group>"; };
+		A1A95F4F1BE730FD006842FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D030E1A93EEFB9A340518305 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A19213961BD94C2400269078 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A19214071BDA96EC00269078 /* CoreLocation.framework in Frameworks */,
+				A19213E21BDA5B5100269078 /* MapKit.framework in Frameworks */,
+				C579059B6146587BF6063EC4 /* Pods.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1A95F481BE730FC006842FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		95276781DF92AA960F897A80 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				417D4E642ECD4E95F3384F9B /* Pods.debug.xcconfig */,
+				8437A232A9DE1575D40BBE76 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A19213901BD94C2400269078 = {
+			isa = PBXGroup;
+			children = (
+				A192139B1BD94C2400269078 /* DriverTaipei_iOS */,
+				A1A95F4C1BE730FD006842FD /* DriverTaipei_Tests */,
+				A192139A1BD94C2400269078 /* Products */,
+				95276781DF92AA960F897A80 /* Pods */,
+				E49CDEDB8B1662B21C8820EC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A192139A1BD94C2400269078 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A19213991BD94C2400269078 /* DriverTaipei_iOS.app */,
+				A1A95F4B1BE730FC006842FD /* DriverTaipei_Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A192139B1BD94C2400269078 /* DriverTaipei_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A19213C81BDA01DE00269078 /* Utils */,
+				A19213C31BDA012F00269078 /* Newtork */,
+				A19213BD1BDA008800269078 /* DataModel */,
+				A192140E1BDBE78000269078 /* UI */,
+				A19213BA1BD9FF9B00269078 /* ViewController */,
+				A192139C1BD94C2400269078 /* AppDelegate.swift */,
+				A19213A01BD94C2400269078 /* Main.storyboard */,
+				A19213AB1BD94C2500269078 /* Info.plist */,
+				A19213A31BD94C2400269078 /* DriverTaipei_iOS.xcdatamodeld */,
+				A19213B71BD95C6100269078 /* DriverTaipei_iOS-Bridging-Header.h */,
+				A192140F1BDCE59800269078 /* Assets.xcassets */,
+			);
+			path = DriverTaipei_iOS;
+			sourceTree = "<group>";
+		};
+		A19213BA1BD9FF9B00269078 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A192139E1BD94C2400269078 /* MainViewController.swift */,
+				A19213BB1BD9FFAD00269078 /* LaunchViewController.swift */,
+				A19213D71BDA0A0F00269078 /* BasicViewController.swift */,
+				A19214191BDE94C700269078 /* MenuViewController.swift */,
+				A192141D1BDF223300269078 /* SettingViewController.swift */,
+				A192141F1BDF224D00269078 /* AboutViewController.swift */,
+				A19214251BE0B7C000269078 /* FilterViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		A19213BD1BDA008800269078 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				A19213D21BDA042100269078 /* DataNode */,
+				A19213C01BDA00B700269078 /* DataProtocol */,
+				A19213BE1BDA00B000269078 /* DataController.swift */,
+			);
+			name = DataModel;
+			sourceTree = "<group>";
+		};
+		A19213C01BDA00B700269078 /* DataProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				A19213C11BDA00E900269078 /* TrafficDataSource.swift */,
+			);
+			name = DataProtocol;
+			sourceTree = "<group>";
+		};
+		A19213C31BDA012F00269078 /* Newtork */ = {
+			isa = PBXGroup;
+			children = (
+				A19213C41BDA014400269078 /* GasRequest.swift */,
+				A19213DB1BDA4F3000269078 /* ParkingLotRequest.swift */,
+				A19213DD1BDA4F5900269078 /* TrafficRequest.swift */,
+				A19213DF1BDA4F7600269078 /* ConstructRequest.swift */,
+				A19213C51BDA014400269078 /* ServerResponse.swift */,
+			);
+			name = Newtork;
+			sourceTree = "<group>";
+		};
+		A19213C81BDA01DE00269078 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A19213C91BDA021100269078 /* Constant.swift */,
+				A19213CA1BDA021100269078 /* MyExtension.swift */,
+				A19213CB1BDA021100269078 /* Reachability.h */,
+				A19213CC1BDA021100269078 /* Reachability.m */,
+				A19213CD1BDA021100269078 /* Utils.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		A19213D21BDA042100269078 /* DataNode */ = {
+			isa = PBXGroup;
+			children = (
+				A19213D31BDA043000269078 /* DataNode.swift */,
+				A19213D51BDA051800269078 /* DataStore.swift */,
+			);
+			name = DataNode;
+			sourceTree = "<group>";
+		};
+		A192140E1BDBE78000269078 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A19214081BDAA78C00269078 /* CustomAnnotation.swift */,
+				A192140C1BDBE0D900269078 /* CardView.swift */,
+				A192140A1BDBDF2F00269078 /* GasView.swift */,
+				A19214111BDDD1F100269078 /* ParkingLotView.swift */,
+				A19214131BDDF87500269078 /* paymentButton.swift */,
+				A19214151BDE0A5A00269078 /* ConstructView.swift */,
+				A19214171BDE35EA00269078 /* TrafficView.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		A1A95F4C1BE730FD006842FD /* DriverTaipei_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A1A95F4D1BE730FD006842FD /* DriverTaipei_Tests.swift */,
+				A1A95F4F1BE730FD006842FD /* Info.plist */,
+			);
+			path = DriverTaipei_Tests;
+			sourceTree = "<group>";
+		};
+		E49CDEDB8B1662B21C8820EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A19214061BDA96EC00269078 /* CoreLocation.framework */,
+				A19213E11BDA5B5100269078 /* MapKit.framework */,
+				D030E1A93EEFB9A340518305 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A19213981BD94C2400269078 /* DriverTaipei_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A19213AE1BD94C2500269078 /* Build configuration list for PBXNativeTarget "DriverTaipei_iOS" */;
+			buildPhases = (
+				B107EA48AC7406D541BC7ACC /* Check Pods Manifest.lock */,
+				A19213951BD94C2400269078 /* Sources */,
+				A19213961BD94C2400269078 /* Frameworks */,
+				A19213971BD94C2400269078 /* Resources */,
+				8867592F5D0597581259A1DE /* Embed Pods Frameworks */,
+				7DCAEB3484DA2B5AC902484F /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DriverTaipei_iOS;
+			productName = DriverTaipei_iOS;
+			productReference = A19213991BD94C2400269078 /* DriverTaipei_iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A1A95F4A1BE730FC006842FD /* DriverTaipei_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1A95F521BE730FD006842FD /* Build configuration list for PBXNativeTarget "DriverTaipei_Tests" */;
+			buildPhases = (
+				A1A95F471BE730FC006842FD /* Sources */,
+				A1A95F481BE730FC006842FD /* Frameworks */,
+				A1A95F491BE730FC006842FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1A95F511BE730FD006842FD /* PBXTargetDependency */,
+			);
+			name = DriverTaipei_Tests;
+			productName = DriverTaipei_Tests;
+			productReference = A1A95F4B1BE730FC006842FD /* DriverTaipei_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A19213911BD94C2400269078 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Andy chen";
+				TargetAttributes = {
+					A19213981BD94C2400269078 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = JM7YS39AB2;
+					};
+					A1A95F4A1BE730FC006842FD = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = A19213981BD94C2400269078;
+					};
+				};
+			};
+			buildConfigurationList = A19213941BD94C2400269078 /* Build configuration list for PBXProject "DriverTaipei_iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+			);
+			mainGroup = A19213901BD94C2400269078;
+			productRefGroup = A192139A1BD94C2400269078 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A19213981BD94C2400269078 /* DriverTaipei_iOS */,
+				A1A95F4A1BE730FC006842FD /* DriverTaipei_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A19213971BD94C2400269078 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A19214101BDCE59800269078 /* Assets.xcassets in Resources */,
+				A19213A21BD94C2400269078 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1A95F491BE730FC006842FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7DCAEB3484DA2B5AC902484F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8867592F5D0597581259A1DE /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B107EA48AC7406D541BC7ACC /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A19213951BD94C2400269078 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A19213BF1BDA00B000269078 /* DataController.swift in Sources */,
+				A19213D81BDA0A0F00269078 /* BasicViewController.swift in Sources */,
+				A19213DE1BDA4F5900269078 /* TrafficRequest.swift in Sources */,
+				A19214141BDDF87500269078 /* paymentButton.swift in Sources */,
+				A19214091BDAA78C00269078 /* CustomAnnotation.swift in Sources */,
+				A19213E01BDA4F7600269078 /* ConstructRequest.swift in Sources */,
+				A19214121BDDD1F100269078 /* ParkingLotView.swift in Sources */,
+				A192141A1BDE94C700269078 /* MenuViewController.swift in Sources */,
+				A192139F1BD94C2400269078 /* MainViewController.swift in Sources */,
+				A192140B1BDBDF2F00269078 /* GasView.swift in Sources */,
+				A19214201BDF224D00269078 /* AboutViewController.swift in Sources */,
+				A192140D1BDBE0D900269078 /* CardView.swift in Sources */,
+				A19213D41BDA043000269078 /* DataNode.swift in Sources */,
+				A19213C21BDA00E900269078 /* TrafficDataSource.swift in Sources */,
+				A19213D01BDA021100269078 /* Reachability.m in Sources */,
+				A19213DC1BDA4F3000269078 /* ParkingLotRequest.swift in Sources */,
+				A19214261BE0B7C000269078 /* FilterViewController.swift in Sources */,
+				A19213A51BD94C2400269078 /* DriverTaipei_iOS.xcdatamodeld in Sources */,
+				A192139D1BD94C2400269078 /* AppDelegate.swift in Sources */,
+				A19213D61BDA051900269078 /* DataStore.swift in Sources */,
+				A19213C71BDA014400269078 /* ServerResponse.swift in Sources */,
+				A19213C61BDA014400269078 /* GasRequest.swift in Sources */,
+				A19213CF1BDA021100269078 /* MyExtension.swift in Sources */,
+				A19213BC1BD9FFAD00269078 /* LaunchViewController.swift in Sources */,
+				A19213CE1BDA021100269078 /* Constant.swift in Sources */,
+				A192141E1BDF223300269078 /* SettingViewController.swift in Sources */,
+				A19214181BDE35EA00269078 /* TrafficView.swift in Sources */,
+				A19214161BDE0A5A00269078 /* ConstructView.swift in Sources */,
+				A19213D11BDA021100269078 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1A95F471BE730FC006842FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1A95F4E1BE730FD006842FD /* DriverTaipei_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A1A95F511BE730FD006842FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A19213981BD94C2400269078 /* DriverTaipei_iOS */;
+			targetProxy = A1A95F501BE730FD006842FD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A19213A01BD94C2400269078 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A19213A11BD94C2400269078 /* Base */,
+				A1A95F321BE3D475006842FD /* zh-Hant */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A19213AC1BD94C2500269078 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A19213AD1BD94C2500269078 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A19213AF1BD94C2500269078 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 417D4E642ECD4E95F3384F9B /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = YES;
+				INFOPLIST_FILE = DriverTaipei_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaijia.andy.drivertaipei;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "DriverTaipei_iOS/DriverTaipei_iOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A19213B01BD94C2500269078 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8437A232A9DE1575D40BBE76 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: kai jia chen (JM7YS39AB2)";
+				ENABLE_BITCODE = YES;
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = DriverTaipei_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaijia.andy.drivertaipei;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "DriverTaipei_iOS/DriverTaipei_iOS-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		A1A95F531BE730FD006842FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DriverTaipei_Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "andy.DriverTaipei-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DriverTaipei_iOS.app/DriverTaipei_iOS";
+			};
+			name = Debug;
+		};
+		A1A95F541BE730FD006842FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DriverTaipei_Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "andy.DriverTaipei-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DriverTaipei_iOS.app/DriverTaipei_iOS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A19213941BD94C2400269078 /* Build configuration list for PBXProject "DriverTaipei_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A19213AC1BD94C2500269078 /* Debug */,
+				A19213AD1BD94C2500269078 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A19213AE1BD94C2500269078 /* Build configuration list for PBXNativeTarget "DriverTaipei_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A19213AF1BD94C2500269078 /* Debug */,
+				A19213B01BD94C2500269078 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1A95F521BE730FD006842FD /* Build configuration list for PBXNativeTarget "DriverTaipei_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1A95F531BE730FD006842FD /* Debug */,
+				A1A95F541BE730FD006842FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A19213A31BD94C2400269078 /* DriverTaipei_iOS.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A19213A41BD94C2400269078 /* DriverTaipei_iOS.xcdatamodel */,
+			);
+			currentVersion = A19213A41BD94C2400269078 /* DriverTaipei_iOS.xcdatamodel */;
+			path = DriverTaipei_iOS.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A19213911BD94C2400269078 /* Project object */;
+}

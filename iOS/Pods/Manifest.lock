@@ -1,0 +1,24 @@
+PODS:
+  - ChameleonFramework/Default (2.0.4)
+  - ChameleonFramework/Swift (2.0.4):
+    - ChameleonFramework/Default
+  - DLRadioButton (1.3.5)
+  - NVActivityIndicatorView (2.0)
+  - SlideMenuControllerSwift (2.0.0)
+  - SwiftHTTP (1.0.2)
+
+DEPENDENCIES:
+  - ChameleonFramework/Swift
+  - DLRadioButton
+  - NVActivityIndicatorView
+  - SlideMenuControllerSwift
+  - SwiftHTTP
+
+SPEC CHECKSUMS:
+  ChameleonFramework: 5abe69b1f2a6cc79c3c435fcd9d3d855748225ee
+  DLRadioButton: 817c7cba2a630a658dea90f56d6d9740f544930d
+  NVActivityIndicatorView: cf985d36b502d01e4670d3026fb8e30494a6fd6a
+  SlideMenuControllerSwift: 85ce7142935a32e26de41aa90fac0cc9f60fb01c
+  SwiftHTTP: 6d8ca031a9ce613a01e8f18b497503887b0b50c0
+
+COCOAPODS: 0.39.0

@@ -1,0 +1,7 @@
+use_frameworks!
+
+pod 'NVActivityIndicatorView'
+pod 'SwiftHTTP'
+pod 'ChameleonFramework/Swift'
+pod 'SlideMenuControllerSwift'
+pod 'DLRadioButton'
